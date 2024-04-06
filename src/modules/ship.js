@@ -16,3 +16,5 @@ class Ship {
     return false;
   }
 }
+
+export default Ship;
