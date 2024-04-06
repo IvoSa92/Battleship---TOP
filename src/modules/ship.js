@@ -2,20 +2,19 @@ class Ship {
   constructor(name, length) {
     this.name = name;
     this.length = length;
-    this.hits = [];
     this.position = [];
   }
 
   hit(index) {
-    this.hits.push(index);
+    if (index >= 0 && index < this.length) {
+      this.position[index].hit = true;
+    }
   }
 
   isSunk() {
-    if (this.hits.length === this.length) {
+    if (this.position.every((cell) => cell.hit)) {
       return true;
     }
-    return false;
   }
 }
-
 export default Ship;

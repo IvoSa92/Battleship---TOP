@@ -6,4 +6,7 @@ const board = new Gameboard(5);
 const ship = new Ship("destroyer", 3);
 board.placeShip(ship, 0, 0, "vertical");
 
-console.log(ship.position);
+ship.hit(0);
+ship.hit(1);
+ship.hit(2);
+console.log(board.gameBoard);

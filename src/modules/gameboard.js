@@ -21,15 +21,16 @@ class Gameboard {
     if (direction === "horizontal") {
       for (let i = 0; i < ship.length; i++) {
         this.gameBoard[row][column + i].ship = true;
-        ship.position.push({ row: row, column: column + i });
+        ship.position.push({ row: row, column: column + i, hit: false });
       }
     } else if (direction === "vertical") {
       for (let i = 0; i < ship.length; i++) {
         this.gameBoard[row + i][column].ship = true;
-        ship.position.push({ row: row, column: column + i });
+        ship.position.push({ row: row + 1, column: column, hit: false });
       }
     }
   }
 }
 
+//hier gehts weiter mit der receiveAttack funktion der gameBoard Klasse
 export default Gameboard;
