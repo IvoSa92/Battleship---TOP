@@ -3,6 +3,7 @@ class Ship {
     this.name = name;
     this.length = length;
     this.hits = [];
+    this.position = [];
   }
 
   hit(index) {

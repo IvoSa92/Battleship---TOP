@@ -18,13 +18,15 @@ class Gameboard {
   }
 
   placeShip(ship, row, column, direction) {
-    if (direction === "vertical") {
+    if (direction === "horizontal") {
       for (let i = 0; i < ship.length; i++) {
         this.gameBoard[row][column + i].ship = true;
+        ship.position.push({ row: row, column: column + i });
       }
-    } else if (direction === "horizontal") {
+    } else if (direction === "vertical") {
       for (let i = 0; i < ship.length; i++) {
         this.gameBoard[row + i][column].ship = true;
+        ship.position.push({ row: row, column: column + i });
       }
     }
   }

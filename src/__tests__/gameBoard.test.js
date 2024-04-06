@@ -42,7 +42,7 @@ test("ship placing horizontal", () => {
   board.placeShip(ship, 0, 0, "horizontal");
 
   for (let i = 0; i < ship.length; i++) {
-    expect(board.gameBoard[i][0].ship).toBe(true);
+    expect(board.gameBoard[0][i].ship).toBe(true);
   }
 });
 
@@ -51,6 +51,6 @@ test("ship placing vertical", () => {
   board.placeShip(ship, 0, 0, "vertical");
 
   for (let i = 0; i < ship.length; i++) {
-    expect(board.gameBoard[0][i].ship).toBe(true);
+    expect(board.gameBoard[i][0].ship).toBe(true);
   }
 });
