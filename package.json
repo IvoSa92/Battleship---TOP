@@ -7,7 +7,8 @@
   "scripts": {
     "test": "jest",
     "start": "node src/index.js",
-    "build": "webpack"
+    "build": "webpack",
+    "test-watch": "jest --watch"
   },
   "author": "Ivo S.",
   "license": "ISC",

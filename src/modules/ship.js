@@ -10,7 +10,7 @@ class Ship {
   }
 
   isSunk() {
-    if (this.hits.length === this.length.length) {
+    if (this.hits.length === this.length) {
       return true;
     }
     return false;
