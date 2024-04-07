@@ -26,7 +26,7 @@ class Gameboard {
     } else if (direction === "vertical") {
       for (let i = 0; i < ship.length; i++) {
         this.gameBoard[row + i][column].ship = ship;
-        ship.position.push({ row: row + 1, column: column, hit: false });
+        ship.position.push({ row: row + i, column: column, hit: false });
       }
     }
   }
