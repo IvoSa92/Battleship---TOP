@@ -4,9 +4,11 @@ import Ship from "./modules/ship.js";
 const board = new Gameboard(5);
 
 const ship = new Ship("destroyer", 3);
-board.placeShip(ship, 0, 0, "vertical");
+board.placeShip(ship, 0, 0, "horizontal");
 
-ship.hit(0);
-ship.hit(1);
-ship.hit(2);
-console.log(board.gameBoard);
+board.receiveAttack(0, 0);
+board.receiveAttack(1, 0);
+
+console.log(board.gameBoard[0]);
+console.log(board.gameBoard[0][0].ship.isSunk());
+console.log(board.gameBoard[0][0].ship.isSunk());

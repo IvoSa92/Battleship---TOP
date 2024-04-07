@@ -15,6 +15,7 @@ class Ship {
     if (this.position.every((cell) => cell.hit)) {
       return true;
     }
+    return false;
   }
 }
 export default Ship;
