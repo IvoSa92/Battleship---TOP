@@ -59,3 +59,23 @@ test("when received a shot the cell gets hasBeenShot=true", () => {
   board.receiveAttack(0, 0);
   expect(board.gameBoard[0][0].hasBeenShot).toBe(true);
 });
+
+test("returns when the cell was shot before", () => {
+  board.receiveAttack(0, 0);
+  expect(board.receiveAttack(0, 0)).toBe("This cell was shot before");
+});
+
+test("If ship is on cell it gets hit", () => {
+  let ship = new Ship("miri", 4);
+  board.placeShip(ship, 0, 0, "vertical");
+  expect(board.receiveAttack(0, 0)).toBe("hit!");
+});
+
+test("Checks if ship is sunk", () => {
+  let ship = new Ship("miri", 4);
+  board.placeShip(ship, 0, 0, "horizontal");
+  board.receiveAttack(0, 0);
+  board.receiveAttack(1, 0);
+  board.receiveAttack(2, 0);
+  expect(board.receiveAttack(3, 0)).toBe("hit and destroyed!");
+});

@@ -47,7 +47,7 @@ class Gameboard {
       cell.ship.hit(index);
 
       if (cell.ship.isSunk()) {
-        return "hit and destroyed";
+        return "hit and destroyed!";
       }
       return "hit!";
     } else {
