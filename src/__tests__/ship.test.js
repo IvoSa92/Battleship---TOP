@@ -1,13 +1,19 @@
 import Ship from "../modules/ship.js";
 import Gameboard from "../modules/gameboard.js";
 
-let board = new Gameboard(10);
+let board;
 
 let miri;
 
 beforeEach(() => {
   miri = new Ship("miri", 4);
-  board.placeShip(miri, 0, 0, "vertical");
+  board = new Gameboard(10);
+  board.placeShip(miri, 0, 0, "horizontal");
+});
+
+afterEach(() => {
+  miri = null;
+  board = null;
 });
 
 test("new ship has the length of 4", () => {

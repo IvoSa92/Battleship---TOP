@@ -19,16 +19,37 @@ class Gameboard {
 
   placeShip(ship, row, column, direction) {
     if (direction === "horizontal") {
+      if (column + ship.length > this.size) {
+        return false;
+      }
+
+      for (let i = 0; i < ship.length; i++) {
+        if (this.gameBoard[row][column + i].ship) {
+          return false;
+        }
+      }
+
       for (let i = 0; i < ship.length; i++) {
         this.gameBoard[row][column + i].ship = ship;
         ship.position.push({ row: row, column: column + i, hit: false });
       }
     } else if (direction === "vertical") {
+      if (row + ship.length > this.size) {
+        return false;
+      }
+
+      for (let i = 0; i < ship.length; i++) {
+        if (this.gameBoard[row + i][column].ship) {
+          return false;
+        }
+      }
+
       for (let i = 0; i < ship.length; i++) {
         this.gameBoard[row + i][column].ship = ship;
         ship.position.push({ row: row + i, column: column, hit: false });
       }
     }
+    return true;
   }
 
   receiveAttack(column, row) {

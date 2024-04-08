@@ -3,7 +3,8 @@ import Ship from "./modules/ship.js";
 
 const board = new Gameboard(5);
 
-const ship = new Ship("destroyer", 3);
-board.placeShip(ship, 0, 0, "vertical");
+const miri = new Ship("miri", 4);
+board.placeShip(miri, 0, 0, "horizontal");
 
-board.receiveAttack(0, 0);
+//console.log(board.gameBoard);
+console.log(miri);
