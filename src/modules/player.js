@@ -1,5 +1,4 @@
 import Gameboard from "./gameboard.js";
-import Ship from "./ship.js";
 
 class Player {
   constructor(name, boardSize) {
@@ -12,10 +11,11 @@ class Player {
   }
 
   attackRandom(enemy) {
+    let enemyGameboard = enemy.gameboard.gameBoard;
     let row = this.generateRandomNumber();
     let column = this.generateRandomNumber();
 
-    while (enemy.gameboard[row][column].hasBeenShot) {
+    while (enemyGameboard[row][column].hasBeenShot) {
       row = this.generateRandomNumber();
       column = this.generateRandomNumber();
     }
@@ -27,3 +27,5 @@ class Player {
     return Math.floor(Math.random() * 10);
   }
 }
+
+export default Player;
