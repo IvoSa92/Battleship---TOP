@@ -6,6 +6,7 @@ html {
 
 .container {
   display: flex;
+  flex-direction: column;
 }
 
 /* HEADER */
@@ -52,3 +53,40 @@ html {
 }
 
 /*GAME CONTAINER*/
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.board-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  width: 100vw;
+  height: auto;
+  background-color: aqua;
+  gap: 3em;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.player-gameboard,
+.enemy-gameboard {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  width: 400px;
+  height: 400px;
+}
+
+.cell {
+  border: solid 1px black;
+}

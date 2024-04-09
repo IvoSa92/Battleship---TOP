@@ -10,3 +10,5 @@ class Game {
     this.gameOver = false;
   }
 }
+
+export default Game;
