@@ -1,0 +1,54 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100vw;
+  height: 10vh;
+  background-color: #d1e9e3;
+  justify-content: space-between;
+}
+
+.logo-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.title {
+  font-family: "Exo 2";
+  font-size: 3rem;
+  margin-left: 1rem;
+}
+
+.logo {
+  margin-left: 1rem;
+  width: 4rem;
+  height: 4rem;
+  mix-blend-mode: multiply;
+}
+
+.credits {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+  font-family: "Exo 2";
+  font-size: 0.8rem;
+}
+
+.credit-logo {
+  width: 2rem;
+  height: 2rem;
+}
+
+/*GAME CONTAINER*/
