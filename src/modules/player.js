@@ -20,7 +20,11 @@ class Player {
       column = this.generateRandomNumber();
     }
 
-    enemy.gameboard.receiveAttack(column, row);
+    console.log(enemy.gameboard.receiveAttack(column, row));
+
+    let cellShot = document.getElementById(`${row}${column}`);
+    cellShot.classList.add("cell-shot");
+    console.log(cellShot);
   }
 
   generateRandomNumber() {

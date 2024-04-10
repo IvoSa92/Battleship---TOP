@@ -6,12 +6,13 @@ class Game {
   constructor(player, enemy, boardSize) {
     this.player = new Player(player, boardSize);
     this.enemy = new Player(enemy, boardSize);
-    this.turn = false;
+    this.turn = null;
     this.gameOver = false;
   }
 
-  startGame() {
-    this.turn = true;
+  enemyTurn() {
+    this.enemy.attackRandom(this.player);
+    console.log(this.player.gameboard.gameBoard);
   }
 }
 

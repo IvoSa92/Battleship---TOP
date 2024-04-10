@@ -12,6 +12,8 @@ class Dom {
     this.enemyBoard = document.querySelector(".enemy-board");
   }
   renderBoard(player, enemy) {
+    this.player = player;
+    this.enemy = enemy;
     const boardTitle = document.querySelectorAll(".board-title");
     boardTitle.forEach((title) => {
       title.style.display = "flex";
@@ -45,7 +47,9 @@ class Dom {
           let column = event.target.id[1];
           let row = event.target.id[0];
           player.attack(enemy, row, column);
-          console.log(enemy.gameboard);
+          return enemy.attackRandom(player);
+          //console.log(enemy.gameboard.gameBoard);
+          // this.updateBoard();
         });
         let cellId = cellCounter.toString().padStart(2, "0");
         cell.setAttribute("id", cellId);
@@ -57,6 +61,27 @@ class Dom {
     this.userBoard.appendChild(playerGameboard);
     this.enemyBoard.appendChild(enemyGameboard);
   }
+  /*
+  updateBoard() {
+    const cells = [];
+    this.player.gameboard.gameBoard.forEach((cell) => {
+      cell.forEach((cell) => {
+        cells.push(cell);
+      });
+    });
+
+    this.enemy.gameboard.gameBoard.forEach((cell) => {
+      cell.forEach((cell) => {
+        cells.push(cell);
+      });
+    });
+
+    cells.forEach((cell) => {
+      if (cell.hasBeenShot) {
+        console.log(cell);
+      }
+    });
+  }*/
 }
 
 export default Dom;

@@ -11,4 +11,6 @@ const enemy = newGame.enemy;
 
 dom.gameBtn1Player.addEventListener("click", () => {
   dom.renderBoard(player, enemy);
+  dom.gameBtn1Player.remove();
+  dom.gameBtn2Player.remove();
 });
