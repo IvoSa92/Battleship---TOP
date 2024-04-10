@@ -12,6 +12,11 @@ class Dom {
     this.enemyBoard = document.querySelector(".enemy-board");
   }
   renderBoard(player, enemy) {
+    const boardTitle = document.querySelectorAll(".board-title");
+    boardTitle.forEach((title) => {
+      title.style.display = "flex";
+    });
+
     const playerGameboard = document.createElement("div");
     playerGameboard.className = "player-gameboard";
     let cellCounter = 0;

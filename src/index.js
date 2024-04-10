@@ -8,5 +8,7 @@ const dom = new Dom();
 
 const player = newGame.player;
 const enemy = newGame.enemy;
-console.log(player.gameboard.gameBoard);
-dom.renderBoard(player, enemy);
+
+dom.gameBtn1Player.addEventListener("click", () => {
+  dom.renderBoard(player, enemy);
+});

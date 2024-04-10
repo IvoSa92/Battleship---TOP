@@ -67,7 +67,6 @@ html {
   flex-direction: row;
   width: 100vw;
   height: auto;
-  background-color: aqua;
   gap: 3em;
 }
 
@@ -76,6 +75,11 @@ html {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.user-fleet,
+.enemy-fleet {
+  display: none;
 }
 
 .player-gameboard,
@@ -89,4 +93,8 @@ html {
 
 .cell {
   border: solid 1px black;
+}
+
+.cell:hover {
+  cursor: cell;
 }
