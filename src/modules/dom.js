@@ -26,7 +26,7 @@ class Dom {
         let cell = document.createElement("div");
         cell.className = "cell";
         let cellId = cellCounter.toString().padStart(2, "0");
-        cell.setAttribute("id", `player-${cellId}`);
+        cell.setAttribute("id", cellId);
         playerGameboard.appendChild(cell);
         cellCounter++;
       }
@@ -40,8 +40,15 @@ class Dom {
       for (let col = 0; col < enemy.gameboard.size; col++) {
         let cell = document.createElement("div");
         cell.className = "cell";
+        cell.addEventListener("click", (event) => {
+          cell.classList.add("cell-shot");
+          let column = event.target.id[1];
+          let row = event.target.id[0];
+          player.attack(enemy, row, column);
+          console.log(enemy.gameboard);
+        });
         let cellId = cellCounter.toString().padStart(2, "0");
-        cell.setAttribute("id", `enemy-${cellId}`);
+        cell.setAttribute("id", cellId);
         enemyGameboard.appendChild(cell);
         cellCounter++;
       }

@@ -97,4 +97,9 @@ html {
 
 .cell:hover {
   cursor: cell;
+  box-shadow: inset 0 0 0 2px red;
+}
+
+.cell-shot {
+  background-color: red;
 }

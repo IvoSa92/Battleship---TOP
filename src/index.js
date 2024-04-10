@@ -3,7 +3,7 @@ import Ship from "./modules/ship.js";
 import Game from "./modules/game.js";
 import Dom from "./modules/dom.js";
 
-const newGame = new Game("ivo", "miri", 10);
+const newGame = new Game("stefan", "miri", 10);
 const dom = new Dom();
 
 const player = newGame.player;

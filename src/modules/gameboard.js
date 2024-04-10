@@ -56,7 +56,7 @@ class Gameboard {
     let cell = this.gameBoard[row][column];
 
     if (cell.hasBeenShot) {
-      return "This cell was shot before";
+      return false;
     }
 
     cell.hasBeenShot = true;
@@ -68,11 +68,11 @@ class Gameboard {
       cell.ship.hit(index);
 
       if (cell.ship.isSunk()) {
-        return "hit and destroyed!";
+        return true;
       }
-      return "hit!";
+      return true;
     } else {
-      return "nope";
+      return false;
     }
   }
 }
