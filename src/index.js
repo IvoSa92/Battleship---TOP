@@ -9,6 +9,9 @@ const dom = new Dom();
 const player = newGame.player;
 const enemy = newGame.enemy;
 
+const playerFleet = newGame.createFleet();
+const enemyFleet = newGame.createFleet();
+
 dom.gameBtn1Player.addEventListener("click", () => {
   dom.renderBoard(player, enemy);
   dom.gameBtn1Player.remove();

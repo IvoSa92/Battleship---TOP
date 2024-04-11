@@ -14,6 +14,17 @@ class Game {
     this.enemy.attackRandom(this.player);
     console.log(this.player.gameboard.gameBoard);
   }
+
+  createFleet() {
+    const fleet = {
+      carrier: new Ship("carrier", 5),
+      battleship: new Ship("battleship", 4),
+      cruiser: new Ship("cruiser", 3),
+      submarine: new Ship("submarine", 3),
+      destroyer: new Ship("destroyer", 2),
+    };
+    return fleet;
+  }
 }
 
 export default Game;
