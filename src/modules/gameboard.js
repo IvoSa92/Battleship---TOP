@@ -49,6 +49,7 @@ class Gameboard {
         ship.position.push({ row: row + i, column: column, hit: false });
       }
     }
+
     return true;
   }
 

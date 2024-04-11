@@ -24,7 +24,6 @@ class Player {
 
     let cellShot = document.getElementById(`${row}${column}`);
     cellShot.classList.add("cell-shot");
-    console.log(cellShot);
   }
 
   generateRandomNumber() {

@@ -42,14 +42,13 @@ class Dom {
       for (let col = 0; col < enemy.gameboard.size; col++) {
         let cell = document.createElement("div");
         cell.className = "cell";
-        /*cell.addEventListener("click", (event) => {
+        /* cell.addEventListener("click", (event) => {
           cell.classList.add("cell-shot");
           let column = event.target.id[1];
           let row = event.target.id[0];
           player.attack(enemy, row, column);
           return enemy.attackRandom(player);
           //console.log(enemy.gameboard.gameBoard);
-          // this.updateBoard();
         });*/
         let cellId = cellCounter.toString().padStart(2, "0");
         cell.setAttribute("id", cellId);
@@ -61,27 +60,46 @@ class Dom {
     this.userBoard.appendChild(playerGameboard);
     this.enemyBoard.appendChild(enemyGameboard);
   }
-  /*
-  updateBoard() {
-    const cells = [];
-    this.player.gameboard.gameBoard.forEach((cell) => {
-      cell.forEach((cell) => {
-        cells.push(cell);
-      });
-    });
 
-    this.enemy.gameboard.gameBoard.forEach((cell) => {
-      cell.forEach((cell) => {
-        cells.push(cell);
-      });
-    });
-
+  eventListenerForShipPlacing(fleet, player, enemy) {
+    let board = document.querySelector(".user-board");
+    let cells = board.querySelectorAll(".cell");
+    let counter = 0;
+    let shipFleet = fleet;
     cells.forEach((cell) => {
-      if (cell.hasBeenShot) {
-        console.log(cell);
-      }
+      cell.addEventListener("click", (event) => {
+        let row = parseInt(event.target.id[0]);
+        let column = parseInt(event.target.id[1]);
+        if (counter === 5) {
+          cell.removeEventListener;
+          this.eventListenerForPlaying(player, enemy);
+        } else {
+          this.player.gameboard.placeShip(
+            shipFleet[counter],
+            row,
+            column,
+            "horizontal"
+          );
+          counter++;
+          console.log(this.player.gameboard.gameBoard);
+        }
+      });
     });
-  }*/
+  }
+
+  eventListenerForPlaying(player, enemy) {
+    let board = document.querySelector(".enemy-board");
+    let cells = board.querySelectorAll(".cell");
+    cells.forEach((cell) => {
+      cell.addEventListener("click", (event) => {
+        cell.classList.add("cell-shot");
+        let column = event.target.id[1];
+        let row = event.target.id[0];
+        player.attack(enemy, row, column);
+        return enemy.attackRandom(player);
+      });
+    });
+  }
 }
 
 export default Dom;

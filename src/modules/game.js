@@ -16,13 +16,14 @@ class Game {
   }
 
   createFleet() {
-    const fleet = {
-      carrier: new Ship("carrier", 5),
-      battleship: new Ship("battleship", 4),
-      cruiser: new Ship("cruiser", 3),
-      submarine: new Ship("submarine", 3),
-      destroyer: new Ship("destroyer", 2),
-    };
+    const fleet = [
+      new Ship("carrier", 5),
+      new Ship("battleship", 4),
+      new Ship("cruiser", 3),
+      new Ship("submarine", 3),
+      new Ship("destroyer", 2),
+    ];
+
     return fleet;
   }
 }
