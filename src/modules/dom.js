@@ -30,6 +30,7 @@ class Dom {
         let cellId = cellCounter.toString().padStart(2, "0");
         cell.setAttribute("id", cellId);
         playerGameboard.appendChild(cell);
+        player.gameboard.gameBoard[row][col].element = cell;
         cellCounter++;
       }
     }
@@ -42,17 +43,10 @@ class Dom {
       for (let col = 0; col < enemy.gameboard.size; col++) {
         let cell = document.createElement("div");
         cell.className = "cell";
-        /* cell.addEventListener("click", (event) => {
-          cell.classList.add("cell-shot");
-          let column = event.target.id[1];
-          let row = event.target.id[0];
-          player.attack(enemy, row, column);
-          return enemy.attackRandom(player);
-          //console.log(enemy.gameboard.gameBoard);
-        });*/
         let cellId = cellCounter.toString().padStart(2, "0");
         cell.setAttribute("id", cellId);
         enemyGameboard.appendChild(cell);
+        enemy.gameboard.gameBoard[row][col].element = cell;
         cellCounter++;
       }
     }
@@ -66,25 +60,31 @@ class Dom {
     let cells = board.querySelectorAll(".cell");
     let counter = 0;
     let shipFleet = fleet;
-    cells.forEach((cell) => {
-      cell.addEventListener("click", (event) => {
+
+    const shipPlacingHandler = (event) => {
+      if (counter >= shipFleet.length) {
+        cells.forEach((cell) =>
+          cell.removeEventListener("click", shipPlacingHandler)
+        );
+        this.eventListenerForPlaying(player, enemy);
+      } else {
         let row = parseInt(event.target.id[0]);
         let column = parseInt(event.target.id[1]);
-        if (counter === 5) {
-          cell.removeEventListener;
-          this.eventListenerForPlaying(player, enemy);
-        } else {
-          this.player.gameboard.placeShip(
-            shipFleet[counter],
-            row,
-            column,
-            "horizontal"
-          );
+        let placementSuccessful = this.player.gameboard.placeShip(
+          shipFleet[counter],
+          row,
+          column,
+          "horizontal"
+        );
+
+        if (placementSuccessful) {
+          this.colorizeShipCells(player, enemy);
           counter++;
-          console.log(this.player.gameboard.gameBoard);
         }
-      });
-    });
+      }
+    };
+
+    cells.forEach((cell) => cell.addEventListener("click", shipPlacingHandler));
   }
 
   eventListenerForPlaying(player, enemy) {
@@ -100,6 +100,36 @@ class Dom {
       });
     });
   }
+
+  colorizeShipCells(player, enemy) {
+    let playerBoard = player.gameboard.gameBoard;
+    let enemyBoard = enemy.gameboard.gameBoard;
+    let shipCells = [];
+    let id;
+    let playerBoardDom = document.querySelector(".user-board");
+
+    for (let row = 0; row < 9; row++) {
+      for (let col = 0; col < playerBoard[row].length; col++) {
+        if (playerBoard[row][col].ship) {
+          //shipCells.push({ row, col });
+          let rowNum = parseInt(row);
+          let colNum = parseInt(col);
+          id = `${rowNum}${colNum}`;
+          console.log(id);
+
+          let cell = playerBoardDom.querySelector(`#${id}`);
+        }
+      }
+    }
+    console.log(id);
+  }
 }
 
 export default Dom;
+
+// schiffe platzeiren ohne UI check
+// umschalten auf attack playing check;
+
+// gegner schiffe platzieren offen
+// ui für plazierte schiffe offen
+// wahl ob horizontal oder vertikal offen

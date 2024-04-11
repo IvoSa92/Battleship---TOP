@@ -1,4 +1,5 @@
 import Ship from "./ship.js";
+import Dom from "./dom.js";
 
 class Gameboard {
   constructor(size) {
@@ -11,7 +12,7 @@ class Gameboard {
     for (let i = 0; i < this.size; i++) {
       let row = [];
       for (let j = 0; j < this.size; j++) {
-        row.push({ ship: false, hasBeenShot: false });
+        row.push({ ship: false, hasBeenShot: false, element: null });
       }
       this.gameBoard.push(row);
     }
@@ -51,6 +52,20 @@ class Gameboard {
     }
 
     return true;
+  }
+
+  placeShipRandom(fleet) {
+    let shipFleet = Array.from(fleet);
+    shipFleet.forEach((ship) => {
+      let placed = false;
+      while (!placed) {
+        let directions = ["vertical", "horizontal"];
+        let row = Math.floor(Math.random() * 10);
+        let column = Math.floor(Math.random() * 10);
+        let directionChoice = directions[Math.floor(Math.random() * 2)];
+        placed = this.placeShip(ship, row, column, directionChoice);
+      }
+    });
   }
 
   receiveAttack(column, row) {

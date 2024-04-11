@@ -1,4 +1,5 @@
 import Gameboard from "./gameboard.js";
+import Game from "./game.js";
 
 class Player {
   constructor(name, boardSize) {
