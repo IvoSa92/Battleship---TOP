@@ -121,7 +121,7 @@ class Dom {
 
     playerBoard.forEach((row) => {
       row.forEach((cell) => {
-        if (cell.ship) {
+        if (cell.ship && !cell.hasBeenShot) {
           cell.element.classList.add("ship-on-cell");
         } else if (!cell.ship && cell.hasBeenShot) {
           cell.element.classList.add("cell-shot");

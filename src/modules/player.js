@@ -21,8 +21,7 @@ class Player {
       column = this.generateRandomNumber();
     }
 
-    //let cellShot = document.getElementById(`${row}${column}`);
-    //cellShot.classList.add("cell-shot");
+    enemyGameboard[row][column].hasBeenShot = true;
   }
 
   generateRandomNumber() {
