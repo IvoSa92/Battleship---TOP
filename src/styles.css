@@ -111,3 +111,12 @@ html {
 .ship-shot {
   background-color: red;
 }
+
+.hover-ship {
+  background-color: rgba(
+    0,
+    100,
+    255,
+    0.5
+  ); /* Halbtransparentes Blau zur Visualisierung */
+}

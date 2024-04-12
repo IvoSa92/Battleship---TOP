@@ -76,11 +76,15 @@ class Gameboard {
     }
 
     cell.hasBeenShot = true;
-
+    console.log(cell);
     if (cell.ship) {
+      let rowNum = parseInt(row);
+      let columnNum = parseInt(column);
+
       const index = cell.ship.position.findIndex(
-        (pos) => pos.row === row && pos.column === column
+        (pos) => pos.row === rowNum && pos.column === columnNum
       );
+
       cell.ship.hit(index);
 
       if (cell.ship.isSunk()) {

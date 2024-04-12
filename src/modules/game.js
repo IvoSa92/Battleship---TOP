@@ -6,7 +6,6 @@ class Game {
   constructor(player, enemy, boardSize) {
     this.player = new Player(player, boardSize);
     this.enemy = new Player(enemy, boardSize);
-    //  this.gameboardSize = boardSize;
     this.turn = null;
     this.gameOver = false;
   }

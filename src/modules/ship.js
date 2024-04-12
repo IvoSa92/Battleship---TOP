@@ -13,6 +13,7 @@ class Ship {
 
   isSunk() {
     if (this.position.every((cell) => cell.hit)) {
+      console.log("true");
       return true;
     }
     return false;

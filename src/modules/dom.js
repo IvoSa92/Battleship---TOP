@@ -60,6 +60,7 @@ class Dom {
     let cells = board.querySelectorAll(".cell");
     let counter = 0;
     let shipFleet = fleet;
+    let currentShip = shipFleet[counter];
 
     const shipPlacingHandler = (event) => {
       if (counter >= shipFleet.length) {
@@ -134,13 +135,6 @@ class Dom {
 }
 
 export default Dom;
-
-// schiffe platzeiren ohne UI check
-// umschalten auf attack playing check;
-
-// gegner schiffe platzieren check
-// ui für plazierte schiffe check
-// wahl ob horizontal oder check
 
 //button für die wahl ob vertikal oder horizontal schiff setzen offen
 // spieldynmaik mit treffern usw ausarbeiten
