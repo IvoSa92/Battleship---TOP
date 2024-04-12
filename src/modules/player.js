@@ -12,16 +12,14 @@ class Player {
   }
 
   attackRandom(enemy) {
-    let enemyGameboard = enemy.gameboard.gameBoard;
     let row = this.generateRandomNumber();
     let column = this.generateRandomNumber();
 
-    while (enemyGameboard[row][column].hasBeenShot) {
+    while (enemy.gameboard.gameBoard[row][column].hasBeenShot) {
       row = this.generateRandomNumber();
       column = this.generateRandomNumber();
     }
-
-    enemyGameboard[row][column].hasBeenShot = true;
+    enemy.gameboard.receiveAttack(column, row);
   }
 
   generateRandomNumber() {
