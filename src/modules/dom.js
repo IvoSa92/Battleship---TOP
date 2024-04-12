@@ -91,16 +91,23 @@ class Dom {
   eventListenerForPlaying(player, enemy) {
     let board = document.querySelector(".enemy-board");
     let cells = board.querySelectorAll(".cell");
+
+    const handleClick = (event) => {
+      let cell = event.target;
+
+      let row = parseInt(cell.id[1]);
+      let column = parseInt(cell.id[0]);
+
+      player.attack(enemy, row, column);
+      this.updateUi(enemy, player);
+      enemy.attackRandom(player);
+      this.updateUi(enemy, player);
+
+      cell.removeEventListener("click", handleClick);
+    };
+
     cells.forEach((cell) => {
-      cell.addEventListener("click", (event) => {
-        // cell.classList.add("cell-shot");
-        let row = event.target.id[1];
-        let column = event.target.id[0];
-        player.attack(enemy, row, column);
-        this.updateUi(enemy, player);
-        enemy.attackRandom(player);
-        this.updateUi(enemy, player);
-      });
+      cell.addEventListener("click", handleClick);
     });
   }
 
@@ -141,5 +148,5 @@ class Dom {
 export default Dom;
 
 //button für die wahl ob vertikal oder horizontal schiff setzen offen
-// spieldynmaik mit treffern usw ausarbeiten
+
 //man kann jede zelle mehrmals beschießen und der nächste spieler ist drann offen
