@@ -15,8 +15,7 @@ const enemyFleet = newGame.createFleet();
 
 dom.gameBtn1Player.addEventListener("click", () => {
   dom.renderBoard(player, enemy);
-  console.log(player.gameboard.gameBoard);
-  console.log(enemy.gameboard.gameBoard);
+
   enemy.gameboard.placeShipRandom(enemyFleet);
   dom.eventListenerForShipPlacing(playerFleet, player, enemy);
   dom.gameBtn1Player.remove();

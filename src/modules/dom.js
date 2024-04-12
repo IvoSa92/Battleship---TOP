@@ -79,7 +79,7 @@ class Dom {
         );
 
         if (placementSuccessful) {
-          this.updateUi(player, enemy);
+          this.updateUi(enemy, player);
           counter++;
         }
       }
@@ -110,7 +110,9 @@ class Dom {
 
     enemyBoard.forEach((row) => {
       row.forEach((cell) => {
-        if (cell.ship && !cell.hasBeenShot) {
+        if (cell.ship && cell.ship.destroyed) {
+          cell.element.classList.add("destroyed");
+        } else if (cell.ship && !cell.hasBeenShot) {
           cell.element.classList.add("ship-on-cell");
         } else if (!cell.ship && cell.hasBeenShot) {
           cell.element.classList.add("cell-shot");
@@ -122,7 +124,9 @@ class Dom {
 
     playerBoard.forEach((row) => {
       row.forEach((cell) => {
-        if (cell.ship && !cell.hasBeenShot) {
+        if (cell.ship && cell.ship.destroyed) {
+          cell.element.classList.add("destroyed");
+        } else if (cell.ship && !cell.hasBeenShot) {
           cell.element.classList.add("ship-on-cell");
         } else if (!cell.ship && cell.hasBeenShot) {
           cell.element.classList.add("cell-shot");

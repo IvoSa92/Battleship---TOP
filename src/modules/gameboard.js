@@ -77,6 +77,7 @@ class Gameboard {
 
     cell.hasBeenShot = true;
     console.log(cell);
+
     if (cell.ship) {
       let rowNum = parseInt(row);
       let columnNum = parseInt(column);
