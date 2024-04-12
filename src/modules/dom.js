@@ -78,7 +78,7 @@ class Dom {
         );
 
         if (placementSuccessful) {
-          this.colorizeShipCells(player, enemy);
+          this.updateUi(player, enemy);
           counter++;
         }
       }
@@ -92,36 +92,44 @@ class Dom {
     let cells = board.querySelectorAll(".cell");
     cells.forEach((cell) => {
       cell.addEventListener("click", (event) => {
-        cell.classList.add("cell-shot");
-        let column = event.target.id[1];
-        let row = event.target.id[0];
+        // cell.classList.add("cell-shot");
+        let row = event.target.id[1];
+        let column = event.target.id[0];
         player.attack(enemy, row, column);
-        return enemy.attackRandom(player);
+        this.updateUi(enemy, player);
+        enemy.attackRandom(player);
+        this.updateUi(enemy, player);
       });
     });
   }
 
-  colorizeShipCells(player, enemy) {
-    let playerBoard = player.gameboard.gameBoard;
+  updateUi(enemy, player) {
     let enemyBoard = enemy.gameboard.gameBoard;
-    let shipCells = [];
-    let id;
-    let playerBoardDom = document.querySelector(".user-board");
+    let playerBoard = player.gameboard.gameBoard;
 
-    for (let row = 0; row < 9; row++) {
-      for (let col = 0; col < playerBoard[row].length; col++) {
-        if (playerBoard[row][col].ship) {
-          //shipCells.push({ row, col });
-          let rowNum = parseInt(row);
-          let colNum = parseInt(col);
-          id = `${rowNum}${colNum}`;
-          console.log(id);
-
-          let cell = playerBoardDom.querySelector(`#${id}`);
+    enemyBoard.forEach((row) => {
+      row.forEach((cell) => {
+        if (cell.ship && !cell.hasBeenShot) {
+          cell.element.classList.add("ship-on-cell");
+        } else if (!cell.ship && cell.hasBeenShot) {
+          cell.element.classList.add("cell-shot");
+        } else if (cell.ship && cell.hasBeenShot) {
+          cell.element.classList.add("ship-shot");
         }
-      }
-    }
-    console.log(id);
+      });
+    });
+
+    playerBoard.forEach((row) => {
+      row.forEach((cell) => {
+        if (cell.ship) {
+          cell.element.classList.add("ship-on-cell");
+        } else if (!cell.ship && cell.hasBeenShot) {
+          cell.element.classList.add("cell-shot");
+        } else if (cell.ship && cell.hasBeenShot) {
+          cell.element.classList.add("ship-shot");
+        }
+      });
+    });
   }
 }
 
@@ -130,6 +138,10 @@ export default Dom;
 // schiffe platzeiren ohne UI check
 // umschalten auf attack playing check;
 
-// gegner schiffe platzieren offen
-// ui für plazierte schiffe offen
-// wahl ob horizontal oder vertikal offen
+// gegner schiffe platzieren check
+// ui für plazierte schiffe check
+// wahl ob horizontal oder check
+
+//button für die wahl ob vertikal oder horizontal schiff setzen offen
+// spieldynmaik mit treffern usw ausarbeiten
+//man kann jede zelle mehrmals beschießen und der nächste spieler ist drann offen

@@ -82,6 +82,10 @@ html {
   display: none;
 }
 
+.ship-on-cell {
+  background-color: green;
+}
+
 .player-gameboard,
 .enemy-gameboard {
   display: grid;
@@ -101,5 +105,9 @@ html {
 }
 
 .cell-shot {
+  background-color: blue;
+}
+
+.ship-shot {
   background-color: red;
 }

@@ -21,10 +21,8 @@ class Player {
       column = this.generateRandomNumber();
     }
 
-    console.log(enemy.gameboard.receiveAttack(column, row));
-
-    let cellShot = document.getElementById(`${row}${column}`);
-    cellShot.classList.add("cell-shot");
+    //let cellShot = document.getElementById(`${row}${column}`);
+    //cellShot.classList.add("cell-shot");
   }
 
   generateRandomNumber() {
