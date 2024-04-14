@@ -2,6 +2,8 @@ body,
 html {
   margin: 0;
   padding: 0;
+  width: 100vw;
+  height: 100vh;
 }
 
 .container {
@@ -72,9 +74,23 @@ html {
 
 .board {
   display: flex;
+  width: auto;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.direction-btn-div {
+  display: flex;
+  height: auto;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.ship-direction {
+  display: flex;
+  margin-right: 1rem;
 }
 
 .user-fleet,
@@ -91,8 +107,8 @@ html {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   grid-template-rows: repeat(10, 1fr);
-  width: 400px;
-  height: 400px;
+  width: 25rem;
+  height: 25rem;
 }
 
 .cell {

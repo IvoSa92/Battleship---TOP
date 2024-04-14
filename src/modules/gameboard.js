@@ -19,7 +19,7 @@ class Gameboard {
   }
 
   placeShip(ship, row, column, direction) {
-    if (direction === "horizontal") {
+    if (direction === "Horizontal") {
       if (column + ship.length > this.size) {
         return false;
       }
@@ -34,7 +34,7 @@ class Gameboard {
         this.gameBoard[row][column + i].ship = ship;
         ship.position.push({ row: row, column: column + i, hit: false });
       }
-    } else if (direction === "vertical") {
+    } else if (direction === "Vertical") {
       if (row + ship.length > this.size) {
         return false;
       }
@@ -76,7 +76,6 @@ class Gameboard {
     }
 
     cell.hasBeenShot = true;
-    console.log(cell);
 
     if (cell.ship) {
       let rowNum = parseInt(row);

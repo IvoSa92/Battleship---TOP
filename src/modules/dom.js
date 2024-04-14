@@ -11,6 +11,8 @@ class Dom {
     this.userBoard = document.querySelector(".user-board");
     this.enemyBoard = document.querySelector(".enemy-board");
   }
+
+  //render the boards
   renderBoard(player, enemy) {
     this.player = player;
     this.enemy = enemy;
@@ -19,6 +21,7 @@ class Dom {
       title.style.display = "flex";
     });
 
+    //render player board
     const playerGameboard = document.createElement("div");
     playerGameboard.className = "player-gameboard";
     let cellCounter = 0;
@@ -34,7 +37,7 @@ class Dom {
         cellCounter++;
       }
     }
-
+    // render enemy board
     const enemyGameboard = document.createElement("div");
     enemyGameboard.className = "enemy-gameboard";
     cellCounter = 0;
@@ -50,17 +53,35 @@ class Dom {
         cellCounter++;
       }
     }
+    //render ship direction button
+    const shipDirectionDiv = document.createElement("div");
+    shipDirectionDiv.classList.add("direction-btn-div");
 
+    const shipDirectionBtn = document.createElement("button");
+    shipDirectionBtn.classList.add("ship-direction");
+    shipDirectionBtn.textContent = "Vertical";
+
+    shipDirectionDiv.appendChild(shipDirectionBtn);
+
+    // add elements to the dom
     this.userBoard.appendChild(playerGameboard);
+    this.userBoard.appendChild(shipDirectionDiv);
     this.enemyBoard.appendChild(enemyGameboard);
   }
 
+  //event listener for the ship placement
   eventListenerForShipPlacing(fleet, player, enemy) {
     let board = document.querySelector(".user-board");
     let cells = board.querySelectorAll(".cell");
     let counter = 0;
     let shipFleet = fleet;
-    let currentShip = shipFleet[counter];
+    let shipDirection = document.querySelector(".ship-direction");
+
+    //event listener for changing the ship direction button
+    shipDirection.addEventListener("click", () => {
+      shipDirection.textContent =
+        shipDirection.textContent === "Vertical" ? "Horizontal" : "Vertical";
+    });
 
     const shipPlacingHandler = (event) => {
       if (counter >= shipFleet.length) {
@@ -71,11 +92,13 @@ class Dom {
       } else {
         let row = parseInt(event.target.id[0]);
         let column = parseInt(event.target.id[1]);
+        let direction = shipDirection.textContent;
+        console.log(direction);
         let placementSuccessful = this.player.gameboard.placeShip(
           shipFleet[counter],
           row,
           column,
-          "horizontal"
+          direction
         );
 
         if (placementSuccessful) {
@@ -88,6 +111,7 @@ class Dom {
     cells.forEach((cell) => cell.addEventListener("click", shipPlacingHandler));
   }
 
+  // after placing the ships the event listener for starting the game
   eventListenerForPlaying(player, enemy) {
     let board = document.querySelector(".enemy-board");
     let cells = board.querySelectorAll(".cell");
@@ -100,6 +124,7 @@ class Dom {
 
       player.attack(enemy, row, column);
       this.updateUi(enemy, player);
+
       enemy.attackRandom(player);
       this.updateUi(enemy, player);
 
@@ -111,6 +136,7 @@ class Dom {
     });
   }
 
+  //function for UI updates
   updateUi(enemy, player) {
     let enemyBoard = enemy.gameboard.gameBoard;
     let playerBoard = player.gameboard.gameBoard;
@@ -119,6 +145,7 @@ class Dom {
       row.forEach((cell) => {
         if (cell.ship && cell.ship.destroyed) {
           cell.element.classList.add("destroyed");
+          //hier deaktivieren um gegnerische schiffe unsichtbar zu machen
         } else if (cell.ship && !cell.hasBeenShot) {
           cell.element.classList.add("ship-on-cell");
         } else if (!cell.ship && cell.hasBeenShot) {
@@ -147,6 +174,4 @@ class Dom {
 
 export default Dom;
 
-//button für die wahl ob vertikal oder horizontal schiff setzen offen
-
-//man kann jede zelle mehrmals beschießen und der nächste spieler ist drann offen
+// checken ob game over ist
