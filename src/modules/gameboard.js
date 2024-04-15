@@ -6,6 +6,7 @@ class Gameboard {
     this.size = size;
     this.gameBoard = [];
     this.buildBoard = this.buildBoard();
+    this.gameOver = false;
   }
 
   buildBoard() {
@@ -59,7 +60,7 @@ class Gameboard {
     shipFleet.forEach((ship) => {
       let placed = false;
       while (!placed) {
-        let directions = ["vertical", "horizontal"];
+        let directions = ["Vertical", "Horizontal"];
         let row = Math.floor(Math.random() * 10);
         let column = Math.floor(Math.random() * 10);
         let directionChoice = directions[Math.floor(Math.random() * 2)];
@@ -96,5 +97,4 @@ class Gameboard {
     }
   }
 }
-
 export default Gameboard;

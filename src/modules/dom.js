@@ -1,11 +1,11 @@
-import Player from "./player.js";
-import Gameboard from "./gameboard.js ";
 import Game from "./game.js";
-import Ship from "./ship.js";
 
 class Dom {
-  constructor() {
+  constructor(game) {
+    this.game = game;
     this.container = document.querySelector(".container");
+    this.header = document.querySelector(".header");
+    this.gameContainer = document.querySelector(".game-container");
     this.gameBtn1Player = document.querySelector(".start-game-1player");
     this.gameBtn2Player = document.querySelector(".start-game-2player");
     this.userBoard = document.querySelector(".user-board");
@@ -93,7 +93,6 @@ class Dom {
         let row = parseInt(event.target.id[0]);
         let column = parseInt(event.target.id[1]);
         let direction = shipDirection.textContent;
-        console.log(direction);
         let placementSuccessful = this.player.gameboard.placeShip(
           shipFleet[counter],
           row,
@@ -125,9 +124,20 @@ class Dom {
       player.attack(enemy, row, column);
       this.updateUi(enemy, player);
 
+      if (this.game.checkGameOver() === "enemyGameOver") {
+        cells.forEach((cell) => {
+          cell.removeEventListener("click", handleClick);
+        });
+        this.showWinner(player);
+      }
       enemy.attackRandom(player);
       this.updateUi(enemy, player);
-
+      if (this.game.checkGameOver() === "playerGameOver") {
+        cells.forEach((cell) => {
+          cell.removeEventListener("click", handleClick);
+        });
+        this.showWinner(enemy);
+      }
       cell.removeEventListener("click", handleClick);
     };
 
@@ -169,9 +179,37 @@ class Dom {
         }
       });
     });
+    // Game.checkGameOver();
   }
+
+  showWinner(winner) {
+    let winnerName = winner.name;
+    let container = document.createElement("div");
+    container.className = "winner-container";
+
+    let winnerText = document.createElement("h1");
+    winnerText.className = "winner-text";
+    winnerText.textContent = `The Winner is ${winnerName} !`;
+
+    let blurryBackground = document.createElement("div");
+    blurryBackground.className = "blurry-div";
+
+    let newGameBtn = document.createElement("button");
+    newGameBtn.textContent = "NEW GAME";
+    newGameBtn.className = "new-game-tbn";
+
+    container.appendChild(winnerText);
+    container.appendChild(newGameBtn);
+
+    this.container.appendChild(container);
+    this.gameContainer.classList.add("blurr");
+  }
+
+  startNewGame() {}
 }
 
 export default Dom;
 
-// checken ob game over ist
+//New Game funktion erstellen
+// wenn man trifft sollte man nochmal drann sein dürfen
+// schiffe hovern beim platzieren

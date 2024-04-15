@@ -9,6 +9,8 @@ html {
 .container {
   display: flex;
   flex-direction: column;
+  width: 100vw;
+  height: 100vh;
 }
 
 /* HEADER */
@@ -130,4 +132,23 @@ html {
 
 .destroyed {
   background-color: purple;
+}
+
+.blurr {
+  filter: blur(5px);
+}
+
+.winner-container {
+  text-align: center;
+  width: 30rem;
+  height: 10rem;
+  display: column;
+  justify-content: center;
+  align-items: center;
+  background-color: bisque;
+  position: absolute;
+  left: 30%;
+  top: 20%;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 3px 9px;
 }
