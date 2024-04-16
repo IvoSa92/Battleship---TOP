@@ -260,25 +260,36 @@ class Dom {
       this.startNewGame();
     });
 
-    container.appendChild(winnerText);
-    container.appendChild(newGameBtn);
+    let playAgainButton = document.createElement("button");
+    playAgainButton.className = "play-again-btn";
+    playAgainButton.textContent = "PLAY AGAIN";
+    playAgainButton.addEventListener("click", () => {
+      this.playAgain();
+    });
+
+    container.append(winnerText, newGameBtn, playAgainButton);
 
     this.container.appendChild(container);
     this.gameContainer.classList.add("blurr");
+  }
+
+  playAgain() {
+    let winnerContainer = document.querySelector(".winner-container");
+    if (winnerContainer) winnerContainer.remove();
+    this.gameContainer.classList.remove("blurr");
+
+    this.gameStart = false;
+    this.clearBoards();
+    this.initializeGame(this.player.name);
   }
 
   startNewGame() {
     let winnerContainer = document.querySelector(".winner-container");
     if (winnerContainer) winnerContainer.remove();
     this.gameContainer.classList.remove("blurr");
-
     this.gameStart = false;
-
     this.clearBoards();
-
-    this.gameBtn1Player.style.display = "block";
-
-    this.initializeGame(this.player.name);
+    this.nameInput();
   }
 
   clearBoards() {
