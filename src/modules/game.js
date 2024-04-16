@@ -8,16 +8,15 @@ class Game {
     this.enemy = new Player(enemy, boardSize);
     this.enemyFleet = this.createFleetEnemyFleet();
     this.playerFleet = this.createFleetPlayerFleet();
-    this.gameOver = false;
   }
 
   createFleetPlayerFleet() {
     const fleet = [
       new Ship("carrier", 5),
-      new Ship("battleship", 4),
+      /*new Ship("battleship", 4),
       new Ship("cruiser", 3),
       new Ship("submarine", 3),
-      new Ship("destroyer", 2),
+      new Ship("destroyer", 2),*/
     ];
 
     return fleet;
@@ -26,10 +25,10 @@ class Game {
   createFleetEnemyFleet() {
     const fleet = [
       new Ship("carrier", 5),
-      new Ship("battleship", 4),
+      /*new Ship("battleship", 4),
       new Ship("cruiser", 3),
       new Ship("submarine", 3),
-      new Ship("destroyer", 2),
+      new Ship("destroyer", 2),*/
     ];
 
     return fleet;
@@ -37,11 +36,8 @@ class Game {
 
   checkGameOver() {
     if (this.enemyFleet.every((ship) => ship.destroyed)) {
-      this.gameOver = true;
       return "enemyGameOver";
     } else if (this.playerFleet.every((ship) => ship.destroyed)) {
-      this.gameOver = true;
-
       return "playerGameOver";
     }
   }

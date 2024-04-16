@@ -12,6 +12,10 @@ class Dom {
     this.startGame = document.querySelector(".name-input");
     this.userBoard = document.querySelector(".user-board");
     this.enemyBoard = document.querySelector(".enemy-board");
+
+    //objects
+    this.player;
+    this.enemy;
   }
 
   setGame(game) {
@@ -50,14 +54,14 @@ class Dom {
     const newGame = new Game(playerName, "Enemy", 10);
     this.setGame(newGame);
 
-    let player = newGame.player;
-    let enemy = newGame.enemy;
-    this.renderBoard(player, enemy);
+    this.player = newGame.player;
+    this.enemy = newGame.enemy;
+    this.renderBoard(this.player, this.enemy);
     let playerFleet = newGame.playerFleet;
     let enemyFleet = newGame.enemyFleet;
 
-    enemy.gameboard.placeShipRandom(enemyFleet);
-    this.eventListenerForShipPlacing(playerFleet, player, enemy);
+    this.enemy.gameboard.placeShipRandom(enemyFleet);
+    this.eventListenerForShipPlacing(playerFleet, this.player, this.enemy);
     this.gameBtn1Player.remove();
   }
 
@@ -172,18 +176,16 @@ class Dom {
 
       if (player.attack(enemy, row, column) === true) {
         cell.removeEventListener("click", handleClick);
-
         this.updateUi(enemy, player);
+        if (this.game.checkGameOver() === "enemyGameOver") {
+          cells.forEach((cell) => {
+            cell.removeEventListener("click", handleClick);
+          });
+          this.showWinner(player);
+        }
         return;
       }
       this.updateUi(enemy, player);
-
-      if (this.game.checkGameOver() === "enemyGameOver") {
-        cells.forEach((cell) => {
-          cell.removeEventListener("click", handleClick);
-        });
-        this.showWinner(player);
-      }
 
       setTimeout(() => {
         enemy.attackRandom(player);
@@ -237,7 +239,6 @@ class Dom {
         }
       });
     });
-    // Game.checkGameOver();
   }
 
   showWinner(winner) {
@@ -255,6 +256,9 @@ class Dom {
     let newGameBtn = document.createElement("button");
     newGameBtn.textContent = "NEW GAME";
     newGameBtn.className = "new-game-tbn";
+    newGameBtn.addEventListener("click", () => {
+      this.startNewGame();
+    });
 
     container.appendChild(winnerText);
     container.appendChild(newGameBtn);
@@ -263,11 +267,32 @@ class Dom {
     this.gameContainer.classList.add("blurr");
   }
 
-  startNewGame() {}
+  startNewGame() {
+    let winnerContainer = document.querySelector(".winner-container");
+    if (winnerContainer) winnerContainer.remove();
+    this.gameContainer.classList.remove("blurr");
+
+    this.gameStart = false;
+
+    this.clearBoards();
+
+    this.gameBtn1Player.style.display = "block";
+
+    this.initializeGame(this.player.name);
+  }
+
+  clearBoards() {
+    let enemyBoard = document.querySelector(".enemy-gameboard");
+    let playerBoard = document.querySelector(".player-gameboard");
+    let button = document.querySelector(".ship-direction");
+
+    button.remove();
+    enemyBoard.remove();
+    playerBoard.remove();
+  }
 }
 
 export default Dom;
 
-//New Game funktion erstellen
-// wenn man trifft sollte man nochmal drann sein dürfen
 // schiffe hovern beim platzieren
+// nach dem schiffe setzen muss der user immernochmal in sein feld klciken bevor er schießen kann
