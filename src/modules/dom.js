@@ -1,15 +1,62 @@
 import Game from "./game.js";
 
 class Dom {
-  constructor(game) {
-    this.game = game;
+  constructor() {
+    this.game = null;
+    this.gameStart = false;
     this.container = document.querySelector(".container");
     this.header = document.querySelector(".header");
     this.gameContainer = document.querySelector(".game-container");
     this.gameBtn1Player = document.querySelector(".start-game-1player");
     this.gameBtn2Player = document.querySelector(".start-game-2player");
+    this.startGame = document.querySelector(".name-input");
     this.userBoard = document.querySelector(".user-board");
     this.enemyBoard = document.querySelector(".enemy-board");
+  }
+
+  setGame(game) {
+    this.game = game;
+  }
+  //nameInput
+  nameInput() {
+    if (!this.gameStart) {
+      this.gameStart = true;
+      let div = document.createElement("div");
+      div.className = "ask-name-div";
+
+      let title = document.createElement("h1");
+      title.textContent = "What's your name?";
+
+      let input = document.createElement("input");
+      input.className = "name-input";
+      input.placeholder = "Type here...";
+      input.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          this.initializeGame(input.value);
+          div.remove();
+        }
+      });
+
+      let container = this.gameContainer;
+      div.append(title, input);
+      container.appendChild(div);
+      input.focus();
+    }
+  }
+
+  initializeGame(playerName) {
+    const newGame = new Game(playerName, "Enemy", 10);
+    this.setGame(newGame);
+
+    let player = newGame.player;
+    let enemy = newGame.enemy;
+    this.renderBoard(player, enemy);
+    let playerFleet = newGame.playerFleet;
+    let enemyFleet = newGame.enemyFleet;
+
+    enemy.gameboard.placeShipRandom(enemyFleet);
+    this.eventListenerForShipPlacing(playerFleet, player, enemy);
+    this.gameBtn1Player.remove();
   }
 
   //render the boards
@@ -210,6 +257,7 @@ class Dom {
 
 export default Dom;
 
+// vor dem start des spiels namenseingabe
 //New Game funktion erstellen
 // wenn man trifft sollte man nochmal drann sein dürfen
 // schiffe hovern beim platzieren
