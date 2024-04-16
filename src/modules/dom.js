@@ -17,7 +17,8 @@ class Dom {
   setGame(game) {
     this.game = game;
   }
-  //nameInput
+
+  //nameInput and starting game
   nameInput() {
     if (!this.gameStart) {
       this.gameStart = true;
@@ -44,6 +45,7 @@ class Dom {
     }
   }
 
+  //initialize game
   initializeGame(playerName) {
     const newGame = new Game(playerName, "Enemy", 10);
     this.setGame(newGame);
@@ -168,7 +170,12 @@ class Dom {
       let row = parseInt(cell.id[1]);
       let column = parseInt(cell.id[0]);
 
-      player.attack(enemy, row, column);
+      if (player.attack(enemy, row, column) === true) {
+        cell.removeEventListener("click", handleClick);
+
+        this.updateUi(enemy, player);
+        return;
+      }
       this.updateUi(enemy, player);
 
       if (this.game.checkGameOver() === "enemyGameOver") {
@@ -177,8 +184,12 @@ class Dom {
         });
         this.showWinner(player);
       }
-      enemy.attackRandom(player);
-      this.updateUi(enemy, player);
+
+      setTimeout(() => {
+        enemy.attackRandom(player);
+        this.updateUi(enemy, player);
+      }, 1000);
+
       if (this.game.checkGameOver() === "playerGameOver") {
         cells.forEach((cell) => {
           cell.removeEventListener("click", handleClick);
@@ -257,7 +268,6 @@ class Dom {
 
 export default Dom;
 
-// vor dem start des spiels namenseingabe
 //New Game funktion erstellen
 // wenn man trifft sollte man nochmal drann sein dürfen
 // schiffe hovern beim platzieren

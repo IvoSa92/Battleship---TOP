@@ -78,7 +78,7 @@ class Gameboard {
 
     cell.hasBeenShot = true;
 
-    if (cell.ship) {
+    if (cell.ship && !cell.ship.isSunk()) {
       let rowNum = parseInt(row);
       let columnNum = parseInt(column);
 
@@ -89,9 +89,9 @@ class Gameboard {
       cell.ship.hit(index);
 
       if (cell.ship.isSunk()) {
-        return "hit and sunk";
+        return true;
       }
-      return "hit";
+      return true;
     } else {
       return "nope";
     }
