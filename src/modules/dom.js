@@ -114,6 +114,11 @@ class Dom {
     shipDirectionBtn.classList.add("ship-direction");
     shipDirectionBtn.textContent = "Vertical";
 
+    shipDirectionBtn.addEventListener("click", () => {
+      shipDirectionBtn.textContent =
+        shipDirectionBtn.textContent === "Vertical" ? "Horizontal" : "Vertical";
+    });
+
     shipDirectionDiv.appendChild(shipDirectionBtn);
 
     // add elements to the dom
