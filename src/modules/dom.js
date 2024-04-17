@@ -74,6 +74,16 @@ class Dom {
       title.style.display = "flex";
     });
 
+    //display elements
+    const userDiv = document.querySelector(".user-title-div");
+    const enemyDiv = document.querySelector(".enemy-title-div");
+    const icons = document.querySelectorAll(".icon");
+    icons.forEach((icon) => {
+      icon.classList.add("activate");
+    });
+    userDiv.classList.add("activate");
+    enemyDiv.classList.add("activate");
+
     //render player board
     const playerGameboard = document.createElement("div");
     playerGameboard.className = "player-gameboard";
@@ -155,6 +165,7 @@ class Dom {
             cells.forEach((cell) =>
               cell.removeEventListener("click", shipPlacingHandler)
             );
+            shipDirection.remove();
 
             this.eventListenerForPlaying(player, enemy);
           }
@@ -233,6 +244,7 @@ class Dom {
         if (cell.ship && cell.ship.destroyed) {
           cell.element.classList.add("destroyed");
         } else if (cell.ship && !cell.hasBeenShot) {
+          //console.log(cell);
           cell.element.classList.add("ship-on-cell");
         } else if (!cell.ship && cell.hasBeenShot) {
           cell.element.classList.add("cell-shot");
@@ -297,9 +309,11 @@ class Dom {
   clearBoards() {
     let enemyBoard = document.querySelector(".enemy-gameboard");
     let playerBoard = document.querySelector(".player-gameboard");
-    let button = document.querySelector(".ship-direction");
+    let titles = document.querySelectorAll(".activate");
+    titles.forEach((div) => {
+      div.classList.remove("activate");
+    });
 
-    button.remove();
     enemyBoard.remove();
     playerBoard.remove();
   }
@@ -308,5 +322,5 @@ class Dom {
 export default Dom;
 
 // schiffe hovern beim platzieren
-// nach dem schiffe setzen muss der user immernochmal in sein feld klciken bevor er schießen kann
 // Zähler für die Runden und gewinne
+//schiffe unter dem board darstzellen und durchstreichen wenn ein schiff zerstört wurde
