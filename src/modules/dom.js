@@ -130,22 +130,12 @@ class Dom {
     let shipFleet = fleet;
     let shipDirection = document.querySelector(".ship-direction");
 
-    //event listener for changing the ship direction button
-    shipDirection.addEventListener("click", () => {
-      shipDirection.textContent =
-        shipDirection.textContent === "Vertical" ? "Horizontal" : "Vertical";
-    });
-
     const shipPlacingHandler = (event) => {
-      if (counter >= shipFleet.length) {
-        cells.forEach((cell) =>
-          cell.removeEventListener("click", shipPlacingHandler)
-        );
-        this.eventListenerForPlaying(player, enemy);
-      } else {
-        let row = parseInt(event.target.id[0]);
-        let column = parseInt(event.target.id[1]);
-        let direction = shipDirection.textContent;
+      let row = parseInt(event.target.id[0]);
+      let column = parseInt(event.target.id[1]);
+      let direction = shipDirection.textContent;
+
+      if (counter < shipFleet.length) {
         let placementSuccessful = this.player.gameboard.placeShip(
           shipFleet[counter],
           row,
@@ -156,6 +146,13 @@ class Dom {
         if (placementSuccessful) {
           this.updateUi(enemy, player);
           counter++;
+          if (counter === shipFleet.length) {
+            cells.forEach((cell) =>
+              cell.removeEventListener("click", shipPlacingHandler)
+            );
+
+            this.eventListenerForPlaying(player, enemy);
+          }
         }
       }
     };
@@ -307,3 +304,4 @@ export default Dom;
 
 // schiffe hovern beim platzieren
 // nach dem schiffe setzen muss der user immernochmal in sein feld klciken bevor er schießen kann
+// Zähler für die Runden und gewinne

@@ -13,10 +13,10 @@ class Game {
   createFleetPlayerFleet() {
     const fleet = [
       new Ship("carrier", 5),
-      /*new Ship("battleship", 4),
+      new Ship("battleship", 4),
       new Ship("cruiser", 3),
       new Ship("submarine", 3),
-      new Ship("destroyer", 2),*/
+      new Ship("destroyer", 2),
     ];
 
     return fleet;
@@ -25,10 +25,10 @@ class Game {
   createFleetEnemyFleet() {
     const fleet = [
       new Ship("carrier", 5),
-      /*new Ship("battleship", 4),
+      new Ship("battleship", 4),
       new Ship("cruiser", 3),
       new Ship("submarine", 3),
-      new Ship("destroyer", 2),*/
+      new Ship("destroyer", 2),
     ];
 
     return fleet;
