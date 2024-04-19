@@ -92,7 +92,8 @@ class Dom {
     for (let row = 0; row < player.gameboard.size; row++) {
       for (let col = 0; col < player.gameboard.size; col++) {
         let cell = document.createElement("div");
-        cell.className = "cell";
+        cell.classList.add("cell");
+        cell.classList.add("user-cell");
         let cellId = cellCounter.toString().padStart(2, "0");
         cell.setAttribute("id", cellId);
         playerGameboard.appendChild(cell);
@@ -100,6 +101,39 @@ class Dom {
         cellCounter++;
       }
     }
+
+    //user ship container
+    let userShipContainer = document.createElement("div");
+    userShipContainer.className = "ship-container";
+
+    const createShipIcon = (className, src) => {
+      let ship = document.createElement("img");
+      ship.src = src;
+      ship.className = className;
+      ship.classList.add("ship-icon");
+      return ship;
+    };
+
+    let ship1 = createShipIcon("uCarrier gray", "../src/assets/ship-5.jpg");
+    let ship2 = createShipIcon("uBattleship gray", "../src/assets/ship-4.jpg");
+    let ship3 = createShipIcon("uCruiser gray", "../src/assets/ship-3.jpg");
+    let ship4 = createShipIcon("uSubmarine gray", "../src/assets/ship-3.jpg");
+    let ship5 = createShipIcon("uDestroyer gray", "../src/assets/ship-2.jpg");
+
+    userShipContainer.append(ship1, ship2, ship3, ship4, ship5);
+
+    //enemy ship container
+
+    let enemyShipContainer = document.createElement("div");
+    enemyShipContainer.className = "e-ship-container";
+    let ship_1 = createShipIcon("eCarrier", "../src/assets/ship-5.jpg");
+    let ship_2 = createShipIcon("eBattleship", "../src/assets/ship-4.jpg");
+    let ship_3 = createShipIcon("eCruiser", "../src/assets/ship-3.jpg");
+    let ship_4 = createShipIcon("eSubmarine", "../src/assets/ship-3.jpg");
+    let ship_5 = createShipIcon("eDestroyer", "../src/assets/ship-2.jpg");
+
+    enemyShipContainer.append(ship_1, ship_2, ship_3, ship_4, ship_5);
+
     // render enemy board
     const enemyGameboard = document.createElement("div");
     enemyGameboard.className = "enemy-gameboard";
@@ -108,7 +142,8 @@ class Dom {
     for (let row = 0; row < enemy.gameboard.size; row++) {
       for (let col = 0; col < enemy.gameboard.size; col++) {
         let cell = document.createElement("div");
-        cell.className = "cell";
+        cell.classList.add("cell");
+        cell.classList.add("enemy-cell");
         let cellId = cellCounter.toString().padStart(2, "0");
         cell.setAttribute("id", cellId);
         enemyGameboard.appendChild(cell);
@@ -132,9 +167,8 @@ class Dom {
     shipDirectionDiv.appendChild(shipDirectionBtn);
 
     // add elements to the dom
-    this.userBoard.appendChild(playerGameboard);
-    this.userBoard.appendChild(shipDirectionDiv);
-    this.enemyBoard.appendChild(enemyGameboard);
+    this.userBoard.append(playerGameboard, shipDirectionDiv, userShipContainer);
+    this.enemyBoard.append(enemyGameboard, enemyShipContainer);
   }
 
   //event listener for the ship placement
@@ -159,6 +193,8 @@ class Dom {
         );
 
         if (placementSuccessful) {
+          let ships = Array.from(document.querySelectorAll(".gray"));
+          ships[counter].classList.remove("gray"); //HIER FEHLER ?!
           this.updateUi(enemy, player);
           counter++;
           if (counter === shipFleet.length) {
@@ -166,6 +202,8 @@ class Dom {
               cell.removeEventListener("click", shipPlacingHandler)
             );
             shipDirection.remove();
+            let eShipContainer = document.querySelector(".e-ship-container");
+            eShipContainer.style.marginTop = "1rem";
 
             this.eventListenerForPlaying(player, enemy);
           }
@@ -244,7 +282,6 @@ class Dom {
         if (cell.ship && cell.ship.destroyed) {
           cell.element.classList.add("destroyed");
         } else if (cell.ship && !cell.hasBeenShot) {
-          //console.log(cell);
           cell.element.classList.add("ship-on-cell");
         } else if (!cell.ship && cell.hasBeenShot) {
           cell.element.classList.add("cell-shot");
@@ -324,3 +361,6 @@ export default Dom;
 // schiffe hovern beim platzieren
 // Zähler für die Runden und gewinne
 //schiffe unter dem board darstzellen und durchstreichen wenn ein schiff zerstört wurde
+//beim schiffe setzen werdfen die schiffe unten im container aktiviert sozusagen, von grau auf farbe
+
+// IWIE ZÄHLT DER COUNTER IMMER DOPPELT UND JEDES 2 SCHIFF KOMMT DRANN BEIM CLASS GRAY ENTFERNEN?
