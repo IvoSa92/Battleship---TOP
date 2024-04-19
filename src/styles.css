@@ -89,6 +89,7 @@ html {
 .start-game-buttons {
   display: flex;
   align-items: center;
+  margin-top: 2rem;
 }
 
 .ask-name-div {
@@ -96,10 +97,9 @@ html {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 20rem;
-  height: auto;
+  width: 25rem;
+  height: 10rem;
   background-color: var(--colorShadeD);
-
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.3) 0 3px 9px;
   padding: 0.5rem;
@@ -110,16 +110,17 @@ html {
 .ask-name-div h1 {
   color: var(--colorShadeA);
   text-decoration: underline;
+  font-size: 2.5rem;
 }
 
 .ask-name-div input {
   border: none;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.3) 0 3px 9px;
-  padding: 5px;
+  padding: 10px;
   text-align: center;
   font-family: "Exo 2";
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-weight: 600;
   color: var(--colorShadeA);
   background-color: #ecf9f6;
@@ -155,7 +156,6 @@ html {
   justify-content: center;
   width: auto;
   height: auto;
-  border: 3px solid;
   border-radius: 10px;
   padding: 0.5rem;
   margin-bottom: 3rem;
@@ -230,7 +230,12 @@ html {
 }
 
 .cell {
+  position: relative;
+  transition: border 0.3s;
   border: dashed 1px rgb(189, 189, 189);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 .cell:hover {
@@ -238,10 +243,44 @@ html {
   box-shadow: inset 0 0 0 2px red;
 }
 
-.cell-shot {
-  background-color: rgb(69, 117, 237);
+.cell::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60%; /* Durchmesser des Kreises */
+  height: 60%;
+  background-color: red;
   border-radius: 50%;
-  border: 1px solid white;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.cell:hover::after {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.5;
+  }
+  80% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+.cell-shot {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Cline x1='1' y1='1' x2='23' y2='23'/%3E%3Cline x1='23' y1='1' x2='1' y2='23'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgb(145, 185, 245);
 }
 
 .ship-shot {
