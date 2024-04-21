@@ -12,6 +12,8 @@ class Dom {
     this.startGame = document.querySelector(".name-input");
     this.userBoard = document.querySelector(".user-board");
     this.enemyBoard = document.querySelector(".enemy-board");
+    this.playerFleet;
+    this.enemyFleet;
 
     //objects
     this.player;
@@ -57,11 +59,11 @@ class Dom {
     this.player = newGame.player;
     this.enemy = newGame.enemy;
     this.renderBoard(this.player, this.enemy);
-    let playerFleet = newGame.playerFleet;
-    let enemyFleet = newGame.enemyFleet;
+    this.playerFleet = newGame.playerFleet;
+    this.enemyFleet = newGame.enemyFleet;
 
-    this.enemy.gameboard.placeShipRandom(enemyFleet);
-    this.eventListenerForShipPlacing(playerFleet, this.player, this.enemy);
+    this.enemy.gameboard.placeShipRandom(this.enemyFleet);
+    this.eventListenerForShipPlacing(this.playerFleet, this.player, this.enemy);
     this.gameBtn1Player.remove();
   }
 
@@ -231,9 +233,11 @@ class Dom {
       if (player.attack(enemy, row, column) === "hit") {
         cell.removeEventListener("click", handleClick);
         this.updateUi(enemy, player);
+        this.checkShipIcons();
         return;
       }
       this.updateUi(enemy, player);
+      this.checkShipIcons();
       if (this.game.checkGameOver() === "enemyGameOver") {
         cells.forEach((cell) => {
           cell.removeEventListener("click", handleClick);
@@ -262,6 +266,7 @@ class Dom {
   enemyAttackSequence(enemy, player) {
     if (enemy.attackRandom(player) === "hit") {
       this.updateUi(enemy, player);
+      this.checkShipIcons();
 
       if (this.game.checkGameOver() === "playerGameOver") {
         cells.forEach((cell) => {
@@ -311,6 +316,33 @@ class Dom {
         }
       });
     });
+  }
+
+  checkShipIcons() {
+    let playerFleetContainer = document.querySelector(".ship-container");
+    let enemyFleetContainer = document.querySelector(".e-ship-container");
+    let playerFleet = Array.from(
+      playerFleetContainer.querySelectorAll(".ship-icon")
+    );
+    let enemyFleet = Array.from(
+      enemyFleetContainer.querySelectorAll(".ship-icon")
+    );
+
+    for (let i = 0; i < enemyFleet.length; i++) {
+      if (this.enemyFleet[i].destroyed) {
+        if (!enemyFleet[i].classList.contains("gray")) {
+          enemyFleet[i].classList.add("gray");
+        }
+      }
+    }
+
+    for (let i = 0; i < playerFleet.length; i++) {
+      if (this.playerFleet[i].destroyed) {
+        if (!playerFleet[i].classList.contains("gray")) {
+          playerFleet[i].classList.add("gray");
+        }
+      }
+    }
   }
 
   showWinner(winner) {
@@ -386,6 +418,3 @@ export default Dom;
 // schiffe hovern beim platzieren
 // Zähler für die Runden und gewinne
 //schiffe unter dem board darstzellen und durchstreichen wenn ein schiff zerstört wurde
-//beim schiffe setzen werdfen die schiffe unten im container aktiviert sozusagen, von grau auf farbe
-
-// IWIE ZÄHLT DER COUNTER IMMER DOPPELT UND JEDES 2 SCHIFF KOMMT DRANN BEIM CLASS GRAY ENTFERNEN?
