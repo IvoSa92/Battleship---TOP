@@ -178,6 +178,7 @@ class Dom {
     let counter = 0;
     let shipFleet = fleet;
     let shipDirection = document.querySelector(".ship-direction");
+    let ships = Array.from(document.querySelectorAll(".gray"));
 
     const shipPlacingHandler = (event) => {
       let row = parseInt(event.target.id[0]);
@@ -192,10 +193,12 @@ class Dom {
           direction
         );
 
+        console.log(ships[counter]);
+        ships[counter].classList.remove("gray");
+
         if (placementSuccessful) {
-          let ships = Array.from(document.querySelectorAll(".gray"));
-          ships[counter].classList.remove("gray"); //HIER FEHLER ?!
           this.updateUi(enemy, player);
+          console.log(counter);
           counter++;
           if (counter === shipFleet.length) {
             cells.forEach((cell) =>
