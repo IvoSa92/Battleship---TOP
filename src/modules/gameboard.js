@@ -95,7 +95,7 @@ class Gameboard {
       if (cell.ship.isSunk()) {
         return true;
       }
-      return true;
+      return "hit";
     } else {
       return "nope";
     }

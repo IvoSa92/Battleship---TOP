@@ -19,7 +19,7 @@ class Player {
       row = this.generateRandomNumber();
       column = this.generateRandomNumber();
     }
-    enemy.gameboard.receiveAttack(column, row);
+    return enemy.gameboard.receiveAttack(column, row);
   }
 
   generateRandomNumber() {

@@ -193,12 +193,11 @@ class Dom {
           direction
         );
 
-        console.log(ships[counter]);
         ships[counter].classList.remove("gray");
 
         if (placementSuccessful) {
           this.updateUi(enemy, player);
-          console.log(counter);
+
           counter++;
           if (counter === shipFleet.length) {
             cells.forEach((cell) =>
@@ -228,36 +227,55 @@ class Dom {
       let row = parseInt(cell.id[1]);
       let column = parseInt(cell.id[0]);
 
-      if (player.attack(enemy, row, column) === true) {
+      //player attack sequence
+      if (player.attack(enemy, row, column) === "hit") {
         cell.removeEventListener("click", handleClick);
         this.updateUi(enemy, player);
-        if (this.game.checkGameOver() === "enemyGameOver") {
-          cells.forEach((cell) => {
-            cell.removeEventListener("click", handleClick);
-          });
-          this.showWinner(player);
-        }
         return;
       }
       this.updateUi(enemy, player);
-
-      setTimeout(() => {
-        enemy.attackRandom(player);
-        this.updateUi(enemy, player);
-      }, 1000);
-
-      if (this.game.checkGameOver() === "playerGameOver") {
+      if (this.game.checkGameOver() === "enemyGameOver") {
         cells.forEach((cell) => {
           cell.removeEventListener("click", handleClick);
         });
-        this.showWinner(enemy);
+        this.showWinner(player);
       }
+      //enemy attack sequence
+      setTimeout(() => {
+        this.enemyAttackSequence(enemy, player);
+        if (this.game.checkGameOver() === "playerGameOver") {
+          cells.forEach((cell) => {
+            cell.removeEventListener("click", handleClick);
+          });
+          this.showWinner(enemy);
+        }
+      }, 1000);
+
       cell.removeEventListener("click", handleClick);
     };
 
     cells.forEach((cell) => {
       cell.addEventListener("click", handleClick);
     });
+  }
+
+  enemyAttackSequence(enemy, player) {
+    if (enemy.attackRandom(player) === "hit") {
+      this.updateUi(enemy, player);
+
+      if (this.game.checkGameOver() === "playerGameOver") {
+        cells.forEach((cell) => {
+          cell.removeEventListener("click", handleClick);
+        });
+        this.showWinner(enemy);
+      } else {
+        setTimeout(() => {
+          this.enemyAttackSequence(enemy, player);
+        }, 1500);
+      }
+    } else {
+      this.updateUi(enemy, player);
+    }
   }
 
   //function for UI updates
@@ -349,6 +367,8 @@ class Dom {
   clearBoards() {
     let enemyBoard = document.querySelector(".enemy-gameboard");
     let playerBoard = document.querySelector(".player-gameboard");
+    let eShipContainer = document.querySelector(".e-ship-container");
+    let shipContainer = document.querySelector(".ship-container");
     let titles = document.querySelectorAll(".activate");
     titles.forEach((div) => {
       div.classList.remove("activate");
@@ -356,6 +376,8 @@ class Dom {
 
     enemyBoard.remove();
     playerBoard.remove();
+    eShipContainer.remove();
+    shipContainer.remove();
   }
 }
 
