@@ -330,16 +330,16 @@ class Dom {
 
     for (let i = 0; i < enemyFleet.length; i++) {
       if (this.enemyFleet[i].destroyed) {
-        if (!enemyFleet[i].classList.contains("gray")) {
-          enemyFleet[i].classList.add("gray");
+        if (!enemyFleet[i].classList.contains("icon-sunk")) {
+          enemyFleet[i].classList.add("icon-sunk");
         }
       }
     }
 
     for (let i = 0; i < playerFleet.length; i++) {
       if (this.playerFleet[i].destroyed) {
-        if (!playerFleet[i].classList.contains("gray")) {
-          playerFleet[i].classList.add("gray");
+        if (!playerFleet[i].classList.contains("icon-sunk")) {
+          playerFleet[i].classList.add("icon-sunk");
         }
       }
     }

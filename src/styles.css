@@ -203,11 +203,19 @@ html {
 }
 
 .ship-icon {
+  position: relative;
+  display: inline-block;
   width: 8rem;
+  transition: filter 1s ease, transform 1s ease, width 1s ease;
 }
 
 .gray {
   filter: grayscale(100%);
+}
+
+.icon-sunk {
+  filter: grayscale(100%);
+  transform: scale(0.7);
 }
 
 .board-title {
