@@ -274,9 +274,12 @@ html {
   width: 25rem;
   height: 25rem;
   background-image: url(../src/assets/water.jpg);
+
   background-size: cover;
   border: 5px solid rgb(189, 189, 189);
   border-radius: 5px;
+  transition: border 0.5s ease-in-out, animation 0.5s ease-in-out,
+    border-color 0.5s ease-in-out;
 }
 
 .cell {
@@ -450,4 +453,17 @@ button {
 
 .current-player {
   border-color: red;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 2px #ff1178d7, 0 0 6px #ff1178d5, 0 0 10px #ff1177,
+      0 0 20px #ff2255, 0 0 40px #ff2255;
+  }
+  50% {
+    box-shadow: 0 0 2px #ff1177, 0 0 8px #ff1177, 0 0 12px #ff1177,
+      0 0 10px #ff2255, 0 0 20px #ff2255;
+  }
 }

@@ -256,7 +256,7 @@ class Dom {
 
       setTimeout(() => {
         this.enemyAttackSequence(enemy, player, cells);
-      }, 1000);
+      }, 2200);
     };
     this.highlightEnemyBoard();
     this.addAllListeners(cells, this.handleClick);
@@ -274,7 +274,7 @@ class Dom {
       } else {
         setTimeout(() => {
           this.enemyAttackSequence(enemy, player, cells);
-        }, 1500);
+        }, 2200);
       }
     } else {
       this.updateUi(enemy, player);
