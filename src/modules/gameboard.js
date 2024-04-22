@@ -39,6 +39,8 @@ class Gameboard {
         this.gameBoard[row][column + i].ship = ship;
         ship.position.push({ row: row, column: column + i, hit: false });
       }
+      ship.start.push(ship.position[0]);
+      ship.end.push(ship.position[ship.position.length - 1]);
     } else if (direction === "Vertical") {
       if (row + ship.length > this.size) {
         return false;
@@ -54,8 +56,10 @@ class Gameboard {
         this.gameBoard[row + i][column].ship = ship;
         ship.position.push({ row: row + i, column: column, hit: false });
       }
+      ship.start.push(ship.position[0]);
+      ship.end.push(ship.position[ship.position.length - 1]);
     }
-
+    console.log(ship);
     return true;
   }
 
@@ -95,7 +99,7 @@ class Gameboard {
       if (cell.ship.isSunk()) {
         return true;
       }
-      return "hit";
+      return "true";
     } else {
       return "nope";
     }

@@ -4,6 +4,8 @@ class Ship {
     this.length = length;
     this.position = [];
     this.destroyed = false;
+    this.start = [];
+    this.end = [];
   }
 
   hit(index) {

@@ -62,7 +62,7 @@ class Dom {
     this.playerFleet = newGame.playerFleet;
     this.enemyFleet = newGame.enemyFleet;
 
-    this.enemy.gameboard.placeShipRandom(this.enemyFleet);
+    this.enemy.gameboard.placeShipRandom(this.enemyFleet); //hier die schiffe umstylen
     this.eventListenerForShipPlacing(this.playerFleet, this.player, this.enemy);
     this.gameBtn1Player.remove();
   }
@@ -199,7 +199,7 @@ class Dom {
 
         if (placementSuccessful) {
           this.updateUi(enemy, player);
-
+          this.styleShipOnBoard(shipFleet[counter], row, column, direction);
           counter++;
           if (counter === shipFleet.length) {
             cells.forEach((cell) =>
@@ -216,6 +216,40 @@ class Dom {
     };
 
     cells.forEach((cell) => cell.addEventListener("click", shipPlacingHandler));
+  }
+
+  styleShipOnBoard(ship, startRow, startColumn, direction) {
+    if (direction === "Horizontal") {
+      for (let i = 0; i < ship.length; i++) {
+        let cellId = `${startRow}${startColumn + i}`;
+        let cell = document.getElementById(cellId);
+        if (cell) {
+          cell.classList.add("ship-on-cell");
+          if (i === 0) {
+            cell.classList.add("first-horizontal");
+          }
+          if (i === ship.length - 1) {
+            cell.classList.add("last-horizontal");
+          }
+        } else {
+        }
+      }
+    } else {
+      for (let i = 0; i < ship.length; i++) {
+        let cellId = `${startRow + i}${startColumn}`;
+        let cell = document.getElementById(cellId);
+        if (cell) {
+          cell.classList.add("ship-on-cell");
+          if (i === 0) {
+            cell.classList.add("first-vertical");
+          }
+          if (i === ship.length - 1) {
+            cell.classList.add("last-vertical");
+          }
+        } else {
+        }
+      }
+    }
   }
 
   // after placing the ships the event listener for starting the game
@@ -332,7 +366,7 @@ class Dom {
         }
       });
     });
-  }
+  } //hier umschrieben damit auf die objekte ship zugeggriffen wird in denen die start und endposition festgehalten sind
 
   checkShipIcons() {
     let playerFleetContainer = document.querySelector(".ship-container");
@@ -453,3 +487,5 @@ export default Dom;
 
 // schiffe hovern beim platzieren
 // Zähler für die Runden und gewinne
+// löadebildschirm mit spielcover , nach dem laden verschwidnet das cover
+// updateUI umschreiben damit das ende und der anfang der schiffe anders dargestellt werden

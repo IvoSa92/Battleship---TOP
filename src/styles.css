@@ -467,3 +467,19 @@ button {
       0 0 10px #ff2255, 0 0 20px #ff2255;
   }
 }
+
+.first-vertical {
+  clip-path: polygon(0% 100%, 100% 100%, 50% 0%);
+}
+
+.last-vertical {
+  border-radius: 0 0 30% 30%;
+}
+
+.first-horizontal {
+  clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
+}
+
+.last-horizontal {
+  border-radius: 0 30% 30% 0;
+}
