@@ -222,6 +222,7 @@ class Dom {
   eventListenerForPlaying(player, enemy) {
     let board = document.querySelector(".enemy-board");
     let cells = board.querySelectorAll(".cell");
+    this.highlightEnemyBoard();
 
     this.handleClick = (event) => {
       let cell = event.target;
@@ -249,18 +250,20 @@ class Dom {
         this.showWinner(player);
         return;
       }
-
+      this.unhighlightEnemyBoard();
+      this.highlightPlayerBoard();
       this.removeAllListeners(cells);
 
       setTimeout(() => {
         this.enemyAttackSequence(enemy, player, cells);
       }, 1000);
     };
-
+    this.highlightEnemyBoard();
     this.addAllListeners(cells, this.handleClick);
   }
 
   enemyAttackSequence(enemy, player, cells) {
+    this.highlightPlayerBoard();
     if (enemy.attackRandom(player) === "hit") {
       this.updateUi(enemy, player);
       this.checkShipIcons();
@@ -275,8 +278,11 @@ class Dom {
       }
     } else {
       this.updateUi(enemy, player);
+      this.unhighlightPlayerBoard();
+      this.highlightEnemyBoard();
       this.addAllListeners(cells, this.handleClick);
     }
+    this.unhighlightPlayerBoard;
   }
 
   removeAllListeners(cells) {
@@ -353,6 +359,26 @@ class Dom {
         }
       }
     }
+  }
+
+  highlightPlayerBoard() {
+    let playerBoardHighlight = document.querySelector(".player-gameboard");
+    playerBoardHighlight.classList.add("current-player");
+  }
+
+  unhighlightPlayerBoard() {
+    let playerBoardHighlight = document.querySelector(".player-gameboard");
+    playerBoardHighlight.classList.remove("current-player");
+  }
+
+  highlightEnemyBoard() {
+    let enemyBoardHighlight = document.querySelector(".enemy-gameboard");
+    enemyBoardHighlight.classList.add("current-player");
+  }
+
+  unhighlightEnemyBoard() {
+    let enemyBoardHighlight = document.querySelector(".enemy-gameboard");
+    enemyBoardHighlight.classList.remove("current-player");
   }
 
   showWinner(winner) {
