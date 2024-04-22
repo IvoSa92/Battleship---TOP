@@ -223,64 +223,74 @@ class Dom {
     let board = document.querySelector(".enemy-board");
     let cells = board.querySelectorAll(".cell");
 
-    const handleClick = (event) => {
+    this.handleClick = (event) => {
       let cell = event.target;
+
+      if (cell.classList.contains("hit")) {
+        return;
+      }
 
       let row = parseInt(cell.id[1]);
       let column = parseInt(cell.id[0]);
 
-      //player attack sequence
       if (player.attack(enemy, row, column) === "hit") {
-        cell.removeEventListener("click", handleClick);
+        cell.classList.add("hit");
         this.updateUi(enemy, player);
         this.checkShipIcons();
         return;
       }
+
+      cell.classList.add("hit");
       this.updateUi(enemy, player);
       this.checkShipIcons();
-      if (this.game.checkGameOver() === "enemyGameOver") {
-        cells.forEach((cell) => {
-          cell.removeEventListener("click", handleClick);
-        });
-        this.showWinner(player);
-      }
-      //enemy attack sequence
-      setTimeout(() => {
-        this.enemyAttackSequence(enemy, player);
-        if (this.game.checkGameOver() === "playerGameOver") {
-          cells.forEach((cell) => {
-            cell.removeEventListener("click", handleClick);
-          });
-          this.showWinner(enemy);
-        }
-      }, 1000);
 
-      cell.removeEventListener("click", handleClick);
+      if (this.game.checkGameOver() === "enemyGameOver") {
+        this.removeAllListeners(cells);
+        this.showWinner(player);
+        return;
+      }
+
+      this.removeAllListeners(cells);
+
+      setTimeout(() => {
+        this.enemyAttackSequence(enemy, player, cells);
+      }, 1000);
     };
 
-    cells.forEach((cell) => {
-      cell.addEventListener("click", handleClick);
-    });
+    this.addAllListeners(cells, this.handleClick);
   }
 
-  enemyAttackSequence(enemy, player) {
+  enemyAttackSequence(enemy, player, cells) {
     if (enemy.attackRandom(player) === "hit") {
       this.updateUi(enemy, player);
       this.checkShipIcons();
 
       if (this.game.checkGameOver() === "playerGameOver") {
-        cells.forEach((cell) => {
-          cell.removeEventListener("click", handleClick);
-        });
+        this.removeAllListeners(cells);
         this.showWinner(enemy);
       } else {
         setTimeout(() => {
-          this.enemyAttackSequence(enemy, player);
+          this.enemyAttackSequence(enemy, player, cells);
         }, 1500);
       }
     } else {
       this.updateUi(enemy, player);
+      this.addAllListeners(cells, this.handleClick);
     }
+  }
+
+  removeAllListeners(cells) {
+    cells.forEach((cell) =>
+      cell.removeEventListener("click", this.handleClick)
+    );
+  }
+
+  addAllListeners(cells, handleClick) {
+    cells.forEach((cell) => {
+      if (!cell.classList.contains("hit")) {
+        cell.addEventListener("click", handleClick);
+      }
+    });
   }
 
   //function for UI updates
@@ -417,4 +427,3 @@ export default Dom;
 
 // schiffe hovern beim platzieren
 // Zähler für die Runden und gewinne
-//schiffe unter dem board darstzellen und durchstreichen wenn ein schiff zerstört wurde
