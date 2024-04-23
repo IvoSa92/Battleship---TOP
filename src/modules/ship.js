@@ -6,6 +6,7 @@ class Ship {
     this.destroyed = false;
     this.start = [];
     this.end = [];
+    this.direction = null;
   }
 
   hit(index) {

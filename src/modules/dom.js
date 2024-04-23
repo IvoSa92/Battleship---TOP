@@ -62,7 +62,8 @@ class Dom {
     this.playerFleet = newGame.playerFleet;
     this.enemyFleet = newGame.enemyFleet;
 
-    this.enemy.gameboard.placeShipRandom(this.enemyFleet); //hier die schiffe umstylen
+    this.enemy.gameboard.placeShipRandom(this.enemyFleet);
+    //hier die schiffe umstylen
     this.eventListenerForShipPlacing(this.playerFleet, this.player, this.enemy);
     this.gameBtn1Player.remove();
   }
@@ -222,6 +223,7 @@ class Dom {
     if (direction === "Horizontal") {
       for (let i = 0; i < ship.length; i++) {
         let cellId = `${startRow}${startColumn + i}`;
+
         let cell = document.getElementById(cellId);
         if (cell) {
           cell.classList.add("ship-on-cell");
@@ -254,6 +256,7 @@ class Dom {
 
   // after placing the ships the event listener for starting the game
   eventListenerForPlaying(player, enemy) {
+    this.styleEnemyShips(this.enemyFleet);
     let board = document.querySelector(".enemy-board");
     let cells = board.querySelectorAll(".cell");
     this.highlightEnemyBoard();
@@ -333,6 +336,40 @@ class Dom {
     });
   }
 
+  styleEnemyShips(enemyFleet) {
+    //vertical ship start and end styling
+    for (let i = 0; i < enemyFleet.length; i++) {
+      if (enemyFleet[i].direction === "Vertical") {
+        let startCoordinates = `${enemyFleet[i].start[0].row}${enemyFleet[i].start[0].column}`;
+        let escapedId = `\\3${startCoordinates.charAt(
+          0
+        )} ${startCoordinates.slice(1)}`;
+        let targetStartCell = this.enemyBoard.querySelector(`#${escapedId}`);
+        targetStartCell.classList.add("first-vertical");
+
+        let endCoordinates = `${enemyFleet[i].end[0].row}${enemyFleet[i].end[0].column}`;
+        let escId = `\\3${endCoordinates.charAt(0)} ${endCoordinates.slice(1)}`;
+        let targetEndCell = this.enemyBoard.querySelector(`#${escId}`);
+        targetEndCell.classList.add("last-vertical");
+      } else {
+        //horizontal ship start and end styling
+        let startCoordinates2 = `${enemyFleet[i].start[0].row}${enemyFleet[i].start[0].column}`;
+        let escapedId2 = `\\3${startCoordinates2.charAt(
+          0
+        )} ${startCoordinates2.slice(1)}`;
+        let targetStartCell2 = this.enemyBoard.querySelector(`#${escapedId2}`);
+        targetStartCell2.classList.add("first-horizontal");
+
+        let endCoordinates2 = `${enemyFleet[i].end[0].row}${enemyFleet[i].end[0].column}`;
+        let escId2 = `\\3${endCoordinates2.charAt(0)} ${endCoordinates2.slice(
+          1
+        )}`;
+        let targetEndCell2 = this.enemyBoard.querySelector(`#${escId2}`);
+        targetEndCell2.classList.add("last-horizontal");
+      }
+    }
+  }
+
   //function for UI updates
   updateUi(enemy, player) {
     let enemyBoard = enemy.gameboard.gameBoard;
@@ -342,7 +379,6 @@ class Dom {
       row.forEach((cell) => {
         if (cell.ship && cell.ship.destroyed) {
           cell.element.classList.add("destroyed");
-          //hier deaktivieren um gegnerische schiffe unsichtbar zu machen
         } else if (cell.ship && !cell.hasBeenShot) {
           cell.element.classList.add("ship-on-cell");
         } else if (!cell.ship && cell.hasBeenShot) {
@@ -366,7 +402,7 @@ class Dom {
         }
       });
     });
-  } //hier umschrieben damit auf die objekte ship zugeggriffen wird in denen die start und endposition festgehalten sind
+  }
 
   checkShipIcons() {
     let playerFleetContainer = document.querySelector(".ship-container");
@@ -487,6 +523,4 @@ export default Dom;
 
 // schiffe hovern beim platzieren
 // Zähler für die Runden und gewinne
-// löadebildschirm mit spielcover , nach dem laden verschwidnet das cover
-// updateUI umschreiben damit das ende und der anfang der schiffe anders dargestellt werden
-// Fehler, wenn ich ein schiff treffe darf ich nicht nochmal!
+// ladebildschirm mit spielcover , nach dem laden verschwidnet das cover

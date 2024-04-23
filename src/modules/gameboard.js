@@ -41,6 +41,7 @@ class Gameboard {
       }
       ship.start.push(ship.position[0]);
       ship.end.push(ship.position[ship.position.length - 1]);
+      ship.direction = "Horizontal";
     } else if (direction === "Vertical") {
       if (row + ship.length > this.size) {
         return false;
@@ -58,8 +59,8 @@ class Gameboard {
       }
       ship.start.push(ship.position[0]);
       ship.end.push(ship.position[ship.position.length - 1]);
+      ship.direction = "Vertical";
     }
-    console.log(ship);
     return true;
   }
 
