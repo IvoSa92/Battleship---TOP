@@ -268,7 +268,7 @@ class Dom {
       let row = parseInt(cell.id[1]);
       let column = parseInt(cell.id[0]);
 
-      if (player.attack(enemy, row, column) === "hit") {
+      if (player.attack(enemy, row, column) === true) {
         cell.classList.add("hit");
         this.updateUi(enemy, player);
         this.checkShipIcons();
@@ -298,7 +298,7 @@ class Dom {
 
   enemyAttackSequence(enemy, player, cells) {
     this.highlightPlayerBoard();
-    if (enemy.attackRandom(player) === "hit") {
+    if (enemy.attackRandom(player) === true) {
       this.updateUi(enemy, player);
       this.checkShipIcons();
 
@@ -489,3 +489,4 @@ export default Dom;
 // Zähler für die Runden und gewinne
 // löadebildschirm mit spielcover , nach dem laden verschwidnet das cover
 // updateUI umschreiben damit das ende und der anfang der schiffe anders dargestellt werden
+// Fehler, wenn ich ein schiff treffe darf ich nicht nochmal!
