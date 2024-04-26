@@ -26,6 +26,7 @@ class Dom {
 
   //nameInput and starting game
   nameInput() {
+    //this.showUi();
     if (!this.gameStart) {
       this.gameStart = true;
       let div = document.createElement("div");
@@ -48,6 +49,9 @@ class Dom {
       div.append(title, input);
       container.appendChild(div);
       input.focus();
+      setTimeout(() => {
+        div.style.transform = "translateY(0)";
+      }, 100);
     }
   }
 
@@ -63,9 +67,43 @@ class Dom {
     this.enemyFleet = newGame.enemyFleet;
 
     this.enemy.gameboard.placeShipRandom(this.enemyFleet);
-    //hier die schiffe umstylen
     this.eventListenerForShipPlacing(this.playerFleet, this.player, this.enemy);
     this.gameBtn1Player.remove();
+  }
+
+  loadingScreen() {
+    let loadingContainer = document.createElement("div");
+    loadingContainer.className = "loading-container";
+
+    let loadingIcon = document.createElement("div");
+    loadingIcon.className = "loader";
+
+    let loadingCover = document.createElement("img");
+    loadingCover.className = "loadingImg";
+    loadingCover.src = "../src/assets/code-commanders.jpeg";
+    loadingContainer.appendChild(loadingCover);
+    loadingContainer.appendChild(loadingIcon);
+    this.gameContainer.appendChild(loadingContainer);
+    setTimeout(() => {
+      loadingCover.style.opacity = "1";
+    }, 100);
+    setTimeout(() => {
+      loadingIcon.style.opacity = "1";
+    }, 1000);
+
+    setTimeout(() => {
+      loadingContainer.style.opacity = "0";
+      setTimeout(() => {
+        loadingContainer.remove();
+      }, 1000);
+      this.showUi();
+    }, 4000);
+  }
+
+  showUi() {
+    this.header.style.opacity = "1";
+    this.gameBtn1Player.style.opacity = "1";
+    this.gameBtn1Player.style.fontSize = "1rem";
   }
 
   //render the boards
@@ -182,6 +220,7 @@ class Dom {
     let shipFleet = fleet;
     let shipDirection = document.querySelector(".ship-direction");
     let ships = Array.from(document.querySelectorAll(".gray"));
+    //this.floatingIcons();
 
     const shipPlacingHandler = (event) => {
       let row = parseInt(event.target.id[0]);
@@ -377,10 +416,11 @@ class Dom {
 
     enemyBoard.forEach((row) => {
       row.forEach((cell) => {
+        //console.log(cell.element.id);
         if (cell.ship && cell.ship.destroyed) {
           cell.element.classList.add("destroyed");
         } else if (cell.ship && !cell.hasBeenShot) {
-          cell.element.classList.add("ship-on-cell");
+          //cell.element.classList.add("ship-on-cell");
         } else if (!cell.ship && cell.hasBeenShot) {
           cell.element.classList.add("cell-shot");
         } else if (cell.ship && cell.hasBeenShot) {
@@ -449,6 +489,20 @@ class Dom {
   unhighlightEnemyBoard() {
     let enemyBoardHighlight = document.querySelector(".enemy-gameboard");
     enemyBoardHighlight.classList.remove("current-player");
+  }
+
+  floatingIcons() {
+    let ship1 = document.createElement("img");
+    ship1.src = "../src/assets/ship-5.jpg";
+    ship1.className = "ship1";
+    this.container.appendChild(ship1);
+    let gameBoard = document.querySelector(".player-gameboard");
+    gameBoard.addEventListener("mouseover", (e) => {
+      ship1.style.left = e.pageX + `px`;
+      ship1.style.top = e.pageY + `px`;
+      ship1.style.display = "block";
+      ship1.style.position = "absolute";
+    });
   }
 
   showWinner(winner) {
@@ -521,6 +575,6 @@ class Dom {
 
 export default Dom;
 
-// schiffe hovern beim platzieren
+// schiffe hovern beim platzieren SIEHE FUNKTION
 // Zähler für die Runden und gewinne
 // ladebildschirm mit spielcover , nach dem laden verschwidnet das cover
