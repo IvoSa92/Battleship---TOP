@@ -227,11 +227,15 @@ html {
 }
 
 .user-board {
+  transition: transform 1s ease;
+  transform: translateX(-300%);
   margin-left: 1rem;
 }
 
 .enemy-board {
   margin-right: 1rem;
+  transition: transform 1s ease;
+  transform: translateX(300%);
 }
 
 .user-fleet {

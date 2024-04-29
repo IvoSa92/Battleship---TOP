@@ -211,6 +211,10 @@ class Dom {
     // add elements to the dom
     this.userBoard.append(playerGameboard, shipDirectionDiv, userShipContainer);
     this.enemyBoard.append(enemyGameboard, enemyShipContainer);
+
+    // slide animation for the boards
+    this.userBoard.style.transform = "translateX(0)";
+    this.enemyBoard.style.transform = "translateX(0)";
   }
 
   //event listener for the ship placement
