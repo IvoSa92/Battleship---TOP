@@ -313,6 +313,7 @@ class Dom {
         return;
       }
       cell.classList.add("cell-attack");
+      cell.classList.add("cell-attack");
       setTimeout(() => {
         let row = parseInt(cell.id[1]);
         let column = parseInt(cell.id[0]);
@@ -348,25 +349,28 @@ class Dom {
 
   enemyAttackSequence(enemy, player, cells) {
     this.highlightPlayerBoard();
-    if (enemy.attackRandom(player) === true) {
-      this.updateUi(enemy, player);
-      this.checkShipIcons();
+    this.attackSfx();
+    setTimeout(() => {
+      if (enemy.attackRandom(player) === true) {
+        this.updateUi(enemy, player);
+        this.checkShipIcons();
 
-      if (this.game.checkGameOver() === "playerGameOver") {
-        this.removeAllListeners(cells);
-        this.showWinner(enemy);
+        if (this.game.checkGameOver() === "playerGameOver") {
+          this.removeAllListeners(cells);
+          this.showWinner(enemy);
+        } else {
+          setTimeout(() => {
+            this.enemyAttackSequence(enemy, player, cells);
+          }, 2200);
+        }
       } else {
-        setTimeout(() => {
-          this.enemyAttackSequence(enemy, player, cells);
-        }, 2200);
+        this.updateUi(enemy, player);
+        this.unhighlightPlayerBoard();
+        this.highlightEnemyBoard();
+        this.addAllListeners(cells, this.handleClick);
       }
-    } else {
-      this.updateUi(enemy, player);
-      this.unhighlightPlayerBoard();
-      this.highlightEnemyBoard();
-      this.addAllListeners(cells, this.handleClick);
-    }
-    this.unhighlightPlayerBoard;
+      this.unhighlightPlayerBoard;
+    }, 1500);
   }
 
   removeAllListeners(cells) {
@@ -424,11 +428,10 @@ class Dom {
 
     enemyBoard.forEach((row) => {
       row.forEach((cell) => {
-        //console.log(cell.element.id);
         if (cell.ship && cell.ship.destroyed) {
           cell.element.classList.add("destroyed");
         } else if (cell.ship && !cell.hasBeenShot) {
-          cell.element.classList.add("ship-on-cell");
+          //cell.element.classList.add("ship-on-cell");
         } else if (!cell.ship && cell.hasBeenShot) {
           cell.element.classList.add("cell-shot");
         } else if (cell.ship && cell.hasBeenShot) {
@@ -585,9 +588,18 @@ class Dom {
   // SFX Section
 
   attackSfx() {
-    let audio = document.querySelector("#attack-sfx");
+    let audio = new Audio("../src/assets/attack.wav");
     audio.playbackRate = 1.5;
     audio.play();
+    setTimeout(() => {
+      this.stopSfx();
+    }, 3500);
+  }
+
+  stopSfx() {
+    var audio = document.querySelector("#attack-sfx");
+    audio.pause();
+    audio.currentTime = 0;
   }
 }
 

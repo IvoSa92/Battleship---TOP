@@ -86,12 +86,12 @@ html {
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  padding: 0;
 }
 
 .start-game-buttons {
   display: flex;
   align-items: center;
-  margin-top: 2rem;
 }
 
 .ask-name-div {
@@ -332,7 +332,36 @@ html {
   }
 }
 
-.cell-attack {
+.cell-attack::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30%; /* Prozentuale Größe relativ zur Zelle */
+  height: 30%; /* Prozentuale Größe relativ zur Zelle */
+  background-color: red;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  animation: pulse 3s infinite;
+  z-index: 1;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/*.cell-attack {
   position: relative;
   content: "";
   top: 50%;
@@ -343,7 +372,7 @@ html {
   border-radius: 50%;
   transform: translate(-50%, -50%);
   animation: pulse 3s infinite;
-}
+}*/
 
 .cell-shot {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Cline x1='1' y1='1' x2='23' y2='23'/%3E%3Cline x1='23' y1='1' x2='1' y2='23'/%3E%3C/svg%3E");
@@ -543,6 +572,7 @@ button {
 
 .loader {
   opacity: 0;
+
   transition: opacity 1s ease;
   width: fit-content;
   font-weight: bold;
@@ -580,5 +610,4 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 5rem;
 }
