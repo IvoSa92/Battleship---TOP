@@ -332,6 +332,19 @@ html {
   }
 }
 
+.cell-attack {
+  position: relative;
+  content: "";
+  top: 50%;
+  left: 50%;
+  width: 30%;
+  height: 30%;
+  background-color: red;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse 3s infinite;
+}
+
 .cell-shot {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Cline x1='1' y1='1' x2='23' y2='23'/%3E%3Cline x1='23' y1='1' x2='1' y2='23'/%3E%3C/svg%3E");
   background-repeat: no-repeat;

@@ -306,38 +306,41 @@ class Dom {
     this.highlightEnemyBoard();
 
     this.handleClick = (event) => {
+      this.attackSfx();
       let cell = event.target;
 
       if (cell.classList.contains("hit")) {
         return;
       }
+      cell.classList.add("cell-attack");
+      setTimeout(() => {
+        let row = parseInt(cell.id[1]);
+        let column = parseInt(cell.id[0]);
+        cell.classList.remove("cell-attack");
+        if (player.attack(enemy, row, column) === true) {
+          cell.classList.add("hit");
+          this.updateUi(enemy, player);
+          this.checkShipIcons();
+          return;
+        }
 
-      let row = parseInt(cell.id[1]);
-      let column = parseInt(cell.id[0]);
-
-      if (player.attack(enemy, row, column) === true) {
         cell.classList.add("hit");
         this.updateUi(enemy, player);
         this.checkShipIcons();
-        return;
-      }
 
-      cell.classList.add("hit");
-      this.updateUi(enemy, player);
-      this.checkShipIcons();
-
-      if (this.game.checkGameOver() === "enemyGameOver") {
+        if (this.game.checkGameOver() === "enemyGameOver") {
+          this.removeAllListeners(cells);
+          this.showWinner(player);
+          return;
+        }
+        this.unhighlightEnemyBoard();
+        this.highlightPlayerBoard();
         this.removeAllListeners(cells);
-        this.showWinner(player);
-        return;
-      }
-      this.unhighlightEnemyBoard();
-      this.highlightPlayerBoard();
-      this.removeAllListeners(cells);
 
-      setTimeout(() => {
-        this.enemyAttackSequence(enemy, player, cells);
-      }, 2200);
+        setTimeout(() => {
+          this.enemyAttackSequence(enemy, player, cells);
+        }, 2200);
+      }, 1500);
     };
     this.highlightEnemyBoard();
     this.addAllListeners(cells, this.handleClick);
@@ -425,11 +428,12 @@ class Dom {
         if (cell.ship && cell.ship.destroyed) {
           cell.element.classList.add("destroyed");
         } else if (cell.ship && !cell.hasBeenShot) {
-          //cell.element.classList.add("ship-on-cell");
+          cell.element.classList.add("ship-on-cell");
         } else if (!cell.ship && cell.hasBeenShot) {
           cell.element.classList.add("cell-shot");
         } else if (cell.ship && cell.hasBeenShot) {
           cell.element.classList.add("ship-shot");
+          cell.element.classList.add("pulsing");
         }
       });
     });
@@ -444,6 +448,7 @@ class Dom {
           cell.element.classList.add("cell-shot");
         } else if (cell.ship && cell.hasBeenShot) {
           cell.element.classList.add("ship-shot");
+          cell.element.classList.add("pulsing");
         }
       });
     });
@@ -576,11 +581,17 @@ class Dom {
     eShipContainer.remove();
     shipContainer.remove();
   }
+
+  // SFX Section
+
+  attackSfx() {
+    let audio = document.querySelector("#attack-sfx");
+    audio.playbackRate = 1.5;
+    audio.play();
+  }
 }
 
 export default Dom;
 
 // schiffe hovern beim platzieren SIEHE FUNKTION
 // Zähler für die Runden und gewinne
-// ladebildschirm mit spielcover , nach dem laden verschwidnet das cover
-// ship direction button ist nicht sichtbar
