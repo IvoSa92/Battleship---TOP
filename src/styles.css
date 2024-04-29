@@ -336,15 +336,41 @@ html {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Cline x1='1' y1='1' x2='23' y2='23'/%3E%3Cline x1='23' y1='1' x2='1' y2='23'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: center;
-  background-color: rgb(145, 185, 245);
+  background-color: rgb(42, 96, 178);
+}
+
+.cell-shot-animation {
+  opacity: 1;
 }
 
 .ship-shot {
   background-color: red;
+  transition: background-color 0.5s ease-out;
+}
+
+.ship-shot.pulsing {
+  animation: pulse 2s ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: red;
+  }
+  25%,
+  75% {
+    background-color: #ff6666;
+  }
+  50% {
+    background-color: #ff3333;
+  }
+  100% {
+    background-color: red;
+  }
 }
 
 .destroyed {
-  background-color: purple;
+  background-color: black;
+  border: none;
 }
 
 .blurr {
