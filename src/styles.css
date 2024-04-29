@@ -376,8 +376,7 @@ button {
   text-transform: uppercase;
 }
 
-.start-game-1player,
-.ship-direction {
+.start-game-1player {
   font-size: 0;
   opacity: 0;
   transition: opacity 2s ease, font-size s ease;
@@ -391,8 +390,15 @@ button {
 }
 
 .ship-direction {
+  transition: opacity 2s ease, font-size s ease;
   padding: 0.5rem;
   font-size: 1rem;
+  border: 2px solid var(--colorShadeA);
+  border-radius: 1em;
+  background: var(--colorShadeE);
+  transform-style: preserve-3d;
+  transition: all 175ms cubic-bezier(0, 0, 1, 1);
+  margin: 1rem;
 }
 .start-game-1player::before {
   position: absolute;

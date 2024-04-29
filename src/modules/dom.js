@@ -26,7 +26,6 @@ class Dom {
 
   //nameInput and starting game
   nameInput() {
-    //this.showUi();
     if (!this.gameStart) {
       this.gameStart = true;
       let div = document.createElement("div");
@@ -196,16 +195,18 @@ class Dom {
     const shipDirectionDiv = document.createElement("div");
     shipDirectionDiv.classList.add("direction-btn-div");
 
-    const shipDirectionBtn = document.createElement("button");
-    shipDirectionBtn.classList.add("ship-direction");
-    shipDirectionBtn.textContent = "Vertical";
+    this.shipDirectionBtn = document.createElement("button");
+    this.shipDirectionBtn.classList.add("ship-direction");
+    this.shipDirectionBtn.textContent = "Vertical";
 
-    shipDirectionBtn.addEventListener("click", () => {
-      shipDirectionBtn.textContent =
-        shipDirectionBtn.textContent === "Vertical" ? "Horizontal" : "Vertical";
+    this.shipDirectionBtn.addEventListener("click", () => {
+      this.shipDirectionBtn.textContent =
+        this.shipDirectionBtn.textContent === "Vertical"
+          ? "Horizontal"
+          : "Vertical";
     });
 
-    shipDirectionDiv.appendChild(shipDirectionBtn);
+    shipDirectionDiv.appendChild(this.shipDirectionBtn);
 
     // add elements to the dom
     this.userBoard.append(playerGameboard, shipDirectionDiv, userShipContainer);
@@ -578,3 +579,4 @@ export default Dom;
 // schiffe hovern beim platzieren SIEHE FUNKTION
 // Zähler für die Runden und gewinne
 // ladebildschirm mit spielcover , nach dem laden verschwidnet das cover
+// ship direction button ist nicht sichtbar
