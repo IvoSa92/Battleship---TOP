@@ -36,6 +36,11 @@ class AudioPlayer {
     let audio = new Audio("../src/assets/ship-sunk.mp3");
     audio.play();
   }
+
+  startingGameSound() {
+    let audio = new Audio("../src/assets/starting-game.mp3");
+    audio.play();
+  }
 }
 
 export default AudioPlayer;

@@ -90,6 +90,7 @@ class Dom {
     }, 100);
     setTimeout(() => {
       loadingIcon.style.opacity = "1";
+      this.audioPlayer.startingGameSound();
     }, 1000);
 
     setTimeout(() => {
@@ -325,13 +326,11 @@ class Dom {
           cell.classList.add("hit");
           this.updateUi(enemy, player);
           this.checkShipIcons();
-          return;
-        }
-
-        if (player.attack(enemy, row, column) === "sunk") {
-          cell.classList.add("hit");
-          this.updateUi(enemy, player);
-          this.checkShipIcons();
+          if (this.game.checkGameOver() === "enemyGameOver") {
+            this.removeAllListeners(cells);
+            this.showWinner(player);
+            return;
+          }
           return;
         }
         this.audioPlayer.waterSplashSound();
@@ -339,11 +338,6 @@ class Dom {
         this.updateUi(enemy, player);
         this.checkShipIcons();
 
-        if (this.game.checkGameOver() === "enemyGameOver") {
-          this.removeAllListeners(cells);
-          this.showWinner(player);
-          return;
-        }
         this.unhighlightEnemyBoard();
         this.highlightPlayerBoard();
         this.removeAllListeners(cells);
@@ -443,7 +437,7 @@ class Dom {
         if (cell.ship && cell.ship.destroyed) {
           cell.element.classList.add("destroyed");
         } else if (cell.ship && !cell.hasBeenShot) {
-          //cell.element.classList.add("ship-on-cell");
+          cell.element.classList.add("ship-on-cell");
         } else if (!cell.ship && cell.hasBeenShot) {
           cell.element.classList.add("cell-shot");
         } else if (cell.ship && cell.hasBeenShot) {
@@ -544,7 +538,7 @@ class Dom {
 
     let newGameBtn = document.createElement("button");
     newGameBtn.textContent = "NEW GAME";
-    newGameBtn.className = "new-game-tbn";
+    newGameBtn.className = "new-game-btn";
     newGameBtn.addEventListener("click", () => {
       this.startNewGame();
     });
@@ -596,23 +590,6 @@ class Dom {
     eShipContainer.remove();
     shipContainer.remove();
   }
-
-  // SFX Section
-
-  /*attackSfx() {
-    let audio = new Audio("../src/assets/attack.wav");
-    audio.playbackRate = 1.5;
-    audio.play();
-    setTimeout(() => {
-      this.stopSfx();
-    }, 3500);
-  }
-
-  stopSfx() {
-    var audio = document.querySelector("#attack-sfx");
-    audio.pause();
-    audio.currentTime = 0;
-  }*/
 }
 
 export default Dom;
