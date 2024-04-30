@@ -244,7 +244,7 @@ class Dom {
         ships[counter].classList.remove("gray");
 
         if (placementSuccessful) {
-          //this.audioPlayer.placeShipSound();
+          this.audioPlayer.placeShipSound();
           this.updateUi(enemy, player);
           this.styleShipOnBoard(shipFleet[counter], row, column, direction);
           counter++;
@@ -313,12 +313,14 @@ class Dom {
       if (cell.classList.contains("hit")) {
         return;
       }
+      this.removeAllListeners(cells);
       cell.classList.add("cell-attack");
       setTimeout(() => {
         let row = parseInt(cell.id[1]);
         let column = parseInt(cell.id[0]);
         cell.classList.remove("cell-attack");
         if (player.attack(enemy, row, column) === true) {
+          this.addAllListeners(cells, this.handleClick);
           this.audioPlayer.playAttackHit();
           cell.classList.add("hit");
           this.updateUi(enemy, player);
