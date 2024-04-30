@@ -1,4 +1,5 @@
 import Game from "./game.js";
+import AudioPlayer from "./sfx.js";
 
 class Dom {
   constructor() {
@@ -14,6 +15,7 @@ class Dom {
     this.enemyBoard = document.querySelector(".enemy-board");
     this.playerFleet;
     this.enemyFleet;
+    this.audioPlayer = new AudioPlayer();
 
     //objects
     this.player;
@@ -225,7 +227,6 @@ class Dom {
     let shipFleet = fleet;
     let shipDirection = document.querySelector(".ship-direction");
     let ships = Array.from(document.querySelectorAll(".gray"));
-    //this.floatingIcons();
 
     const shipPlacingHandler = (event) => {
       let row = parseInt(event.target.id[0]);
@@ -243,6 +244,7 @@ class Dom {
         ships[counter].classList.remove("gray");
 
         if (placementSuccessful) {
+          //this.audioPlayer.placeShipSound();
           this.updateUi(enemy, player);
           this.styleShipOnBoard(shipFleet[counter], row, column, direction);
           counter++;
@@ -306,25 +308,24 @@ class Dom {
     this.highlightEnemyBoard();
 
     this.handleClick = (event) => {
-      this.attackSfx();
       let cell = event.target;
-
+      this.audioPlayer.playAttackStart();
       if (cell.classList.contains("hit")) {
         return;
       }
-      cell.classList.add("cell-attack");
       cell.classList.add("cell-attack");
       setTimeout(() => {
         let row = parseInt(cell.id[1]);
         let column = parseInt(cell.id[0]);
         cell.classList.remove("cell-attack");
         if (player.attack(enemy, row, column) === true) {
+          this.audioPlayer.playAttackHit();
           cell.classList.add("hit");
           this.updateUi(enemy, player);
           this.checkShipIcons();
           return;
         }
-
+        this.audioPlayer.waterSplashSound();
         cell.classList.add("hit");
         this.updateUi(enemy, player);
         this.checkShipIcons();
@@ -340,8 +341,8 @@ class Dom {
 
         setTimeout(() => {
           this.enemyAttackSequence(enemy, player, cells);
-        }, 2200);
-      }, 1500);
+        }, 2500);
+      }, 1700);
     };
     this.highlightEnemyBoard();
     this.addAllListeners(cells, this.handleClick);
@@ -349,9 +350,10 @@ class Dom {
 
   enemyAttackSequence(enemy, player, cells) {
     this.highlightPlayerBoard();
-    this.attackSfx();
+    this.audioPlayer.playAttackStart();
     setTimeout(() => {
       if (enemy.attackRandom(player) === true) {
+        this.audioPlayer.playAttackHit();
         this.updateUi(enemy, player);
         this.checkShipIcons();
 
@@ -361,9 +363,10 @@ class Dom {
         } else {
           setTimeout(() => {
             this.enemyAttackSequence(enemy, player, cells);
-          }, 2200);
+          }, 2500);
         }
       } else {
+        this.audioPlayer.waterSplashSound();
         this.updateUi(enemy, player);
         this.unhighlightPlayerBoard();
         this.highlightEnemyBoard();
@@ -587,7 +590,7 @@ class Dom {
 
   // SFX Section
 
-  attackSfx() {
+  /*attackSfx() {
     let audio = new Audio("../src/assets/attack.wav");
     audio.playbackRate = 1.5;
     audio.play();
@@ -600,7 +603,7 @@ class Dom {
     var audio = document.querySelector("#attack-sfx");
     audio.pause();
     audio.currentTime = 0;
-  }
+  }*/
 }
 
 export default Dom;
