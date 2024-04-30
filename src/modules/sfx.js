@@ -10,6 +10,9 @@ class AudioPlayer {
   playAttackHit() {
     let audio = new Audio("../src/assets/attack-hit.wav");
     audio.play();
+    setTimeout(() => {
+      audio.pause();
+    }, 2000);
   }
 
   placeShipSound() {
@@ -27,6 +30,11 @@ class AudioPlayer {
     setTimeout(() => {
       audio.pause();
     }, 2000);
+  }
+
+  shipSunkSound() {
+    let audio = new Audio("../src/assets/ship-sunk.mp3");
+    audio.play();
   }
 }
 

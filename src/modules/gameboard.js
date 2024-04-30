@@ -1,5 +1,6 @@
 import Ship from "./ship.js";
 import Dom from "./dom.js";
+import AudioPlayer from "./sfx.js";
 
 class Gameboard {
   constructor(size) {
@@ -7,6 +8,7 @@ class Gameboard {
     this.gameBoard = [];
     this.buildBoard = this.buildBoard();
     this.gameOver = false;
+    this.AudioPlayer = new AudioPlayer();
   }
 
   buildBoard() {
@@ -88,6 +90,7 @@ class Gameboard {
     cell.hasBeenShot = true;
 
     if (cell.ship && !cell.ship.isSunk()) {
+      this.AudioPlayer.playAttackHit();
       let rowNum = parseInt(row);
       let columnNum = parseInt(column);
 
@@ -98,10 +101,12 @@ class Gameboard {
       cell.ship.hit(index);
 
       if (cell.ship.isSunk()) {
+        this.AudioPlayer.shipSunkSound();
         return true;
       }
       return true;
     } else {
+      this.AudioPlayer.waterSplashSound();
       return "nope";
     }
   }

@@ -325,6 +325,13 @@ class Dom {
           this.checkShipIcons();
           return;
         }
+
+        if (player.attack(enemy, row, column) === "sunk") {
+          cell.classList.add("hit");
+          this.updateUi(enemy, player);
+          this.checkShipIcons();
+          return;
+        }
         this.audioPlayer.waterSplashSound();
         cell.classList.add("hit");
         this.updateUi(enemy, player);
