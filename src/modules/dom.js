@@ -99,7 +99,7 @@ class Dom {
         loadingContainer.remove();
       }, 1000);
       this.showUi();
-    }, 4000);
+    }, 1000); //war 4000
   }
 
   showUi() {
@@ -207,6 +207,7 @@ class Dom {
         this.shipDirectionBtn.textContent === "Vertical"
           ? "Horizontal"
           : "Vertical";
+      //  this.test(undefined, this.shipDirectionBtn.textContent);
     });
 
     shipDirectionDiv.appendChild(this.shipDirectionBtn);
@@ -262,9 +263,64 @@ class Dom {
         }
       }
     };
-
+    this.test(shipFleet[counter]);
     cells.forEach((cell) => cell.addEventListener("click", shipPlacingHandler));
   }
+
+  test(ship) {
+    let cells = document.querySelectorAll(".user-cell");
+    let shipLength = ship.length;
+
+    cells.forEach((cell) => {
+      cell.addEventListener("mouseenter", () => {
+        let direction = this.shipDirectionBtn.textContent;
+        if (direction === "Vertical") {
+          for (let i = 0; i < shipLength; i++) {
+            let row = parseInt(cell.id[0]) + i;
+            let column = cell.id[1];
+            let coordinate = `${row}${column}`;
+            let shipCell = document.getElementById(coordinate);
+            shipCell.classList.add("place-ship-hover");
+          }
+        }
+
+        if (direction === "Horizontal") {
+          for (let i = 0; i < shipLength; i++) {
+            let row = parseInt(cell.id[0]);
+            let column = parseInt(cell.id[1]) + i;
+            let coordinate = `${row}${column}`;
+            let shipCell = document.getElementById(coordinate);
+            shipCell.classList.add("place-ship-hover");
+          }
+        }
+      });
+    });
+
+    cells.forEach((cell) => {
+      cell.addEventListener("mouseleave", () => {
+        let direction = this.shipDirectionBtn.textContent;
+        if (direction === "Vertical") {
+          for (let i = 0; i < shipLength; i++) {
+            let row = parseInt(cell.id[0]) + i;
+            let column = cell.id[1];
+            let coordinate = `${row}${column}`;
+            let shipCell = document.getElementById(coordinate);
+            shipCell.classList.remove("place-ship-hover");
+          }
+        }
+
+        if (direction === "Horizontal") {
+          for (let i = 0; i < shipLength; i++) {
+            let row = parseInt(cell.id[0]);
+            let column = parseInt(cell.id[1]) + i;
+            let coordinate = `${row}${column}`;
+            let shipCell = document.getElementById(coordinate);
+            shipCell.classList.remove("place-ship-hover");
+          }
+        }
+      });
+    });
+  } //hiert gehts weiter!
 
   styleShipOnBoard(ship, startRow, startColumn, direction) {
     if (direction === "Horizontal") {
@@ -594,5 +650,5 @@ class Dom {
 
 export default Dom;
 
-// schiffe hovern beim platzieren SIEHE FUNKTION
+// Schiffe beim polatzieren, wenn sie den rand des spielbretts erreichen dann kommt ein error
 // Zähler für die Runden und gewinne

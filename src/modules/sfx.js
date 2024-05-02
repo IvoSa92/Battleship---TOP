@@ -40,6 +40,9 @@ class AudioPlayer {
   startingGameSound() {
     let audio = new Audio("../src/assets/starting-game.mp3");
     audio.play();
+    setTimeout(() => {
+      audio.pause();
+    }, 6000);
   }
 }
 

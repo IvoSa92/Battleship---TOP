@@ -648,3 +648,7 @@ button {
   border: 1px solid;
   box-shadow: rgba(0, 0, 0, 0.3) 0 10px 20px;
 }
+
+.place-ship-hover {
+  background-color: gray;
+}
