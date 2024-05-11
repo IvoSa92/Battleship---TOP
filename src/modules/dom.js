@@ -16,6 +16,7 @@ class Dom {
     this.playerFleet;
     this.enemyFleet;
     this.audioPlayer = new AudioPlayer();
+    this.hoverActive = false;
 
     //objects
     this.player;
@@ -229,6 +230,7 @@ class Dom {
     let shipFleet = fleet;
     let shipDirection = document.querySelector(".ship-direction");
     let ships = Array.from(document.querySelectorAll(".gray"));
+    this.shipHoverEffect(shipFleet[counter], true);
 
     const shipPlacingHandler = (event) => {
       let row = parseInt(event.target.id[0]);
@@ -250,7 +252,11 @@ class Dom {
           this.updateUi(enemy, player);
           this.styleShipOnBoard(shipFleet[counter], row, column, direction);
           counter++;
+          if (counter < 5) {
+            this.shipHoverEffect(shipFleet[counter], true);
+          }
           if (counter === shipFleet.length) {
+            this.shipHoverEffect(0, false);
             cells.forEach((cell) =>
               cell.removeEventListener("click", shipPlacingHandler)
             );
@@ -263,34 +269,52 @@ class Dom {
         }
       }
     };
-    this.test(shipFleet[counter]);
+
     cells.forEach((cell) => cell.addEventListener("click", shipPlacingHandler));
   }
 
-  test(ship) {
+  shipHoverEffect(ship, activated) {
+    this.hoverActive = activated;
     let cells = document.querySelectorAll(".user-cell");
     let shipLength = ship.length;
+    let boardSize = this.game.player.gameboard.size;
 
     cells.forEach((cell) => {
       cell.addEventListener("mouseenter", () => {
+        if (!this.hoverActive) {
+          document.querySelectorAll(".place-ship-hover").forEach((cell) => {
+            cell.classList.remove("place-ship-hover");
+          });
+          return;
+        }
         let direction = this.shipDirectionBtn.textContent;
+        let [row, col] = this.getRowColFromCellId(cell.id);
+
+        document.querySelectorAll(".place-ship-hover").forEach((cell) => {
+          cell.classList.remove("place-ship-hover");
+        });
+
         if (direction === "Vertical") {
-          for (let i = 0; i < shipLength; i++) {
-            let row = parseInt(cell.id[0]) + i;
-            let column = cell.id[1];
-            let coordinate = `${row}${column}`;
-            let shipCell = document.getElementById(coordinate);
-            shipCell.classList.add("place-ship-hover");
+          if (row + shipLength <= boardSize) {
+            for (let i = 0; i < shipLength; i++) {
+              let coordinate = `${row + i}${col}`;
+              let shipCell = document.getElementById(coordinate);
+              if (shipCell) {
+                shipCell.classList.add("place-ship-hover");
+              }
+            }
           }
         }
 
         if (direction === "Horizontal") {
-          for (let i = 0; i < shipLength; i++) {
-            let row = parseInt(cell.id[0]);
-            let column = parseInt(cell.id[1]) + i;
-            let coordinate = `${row}${column}`;
-            let shipCell = document.getElementById(coordinate);
-            shipCell.classList.add("place-ship-hover");
+          if (col + shipLength <= boardSize) {
+            for (let i = 0; i < shipLength; i++) {
+              let coordinate = `${row}${col + i}`;
+              let shipCell = document.getElementById(coordinate);
+              if (shipCell) {
+                shipCell.classList.add("place-ship-hover");
+              }
+            }
           }
         }
       });
@@ -298,29 +322,41 @@ class Dom {
 
     cells.forEach((cell) => {
       cell.addEventListener("mouseleave", () => {
+        if (!this.hoverActive) {
+          return;
+        }
         let direction = this.shipDirectionBtn.textContent;
+        let [row, col] = this.getRowColFromCellId(cell.id);
+
         if (direction === "Vertical") {
           for (let i = 0; i < shipLength; i++) {
-            let row = parseInt(cell.id[0]) + i;
-            let column = cell.id[1];
-            let coordinate = `${row}${column}`;
+            let coordinate = `${row + i}${col}`;
             let shipCell = document.getElementById(coordinate);
-            shipCell.classList.remove("place-ship-hover");
+            if (shipCell) {
+              shipCell.classList.remove("place-ship-hover");
+            }
           }
         }
 
         if (direction === "Horizontal") {
           for (let i = 0; i < shipLength; i++) {
-            let row = parseInt(cell.id[0]);
-            let column = parseInt(cell.id[1]) + i;
-            let coordinate = `${row}${column}`;
+            let coordinate = `${row}${col + i}`;
             let shipCell = document.getElementById(coordinate);
-            shipCell.classList.remove("place-ship-hover");
+            if (shipCell) {
+              shipCell.classList.remove("place-ship-hover");
+            }
           }
         }
       });
     });
-  } //hiert gehts weiter!
+  }
+
+  getRowColFromCellId(cellId) {
+    const parts = cellId.split("");
+    const row = parseInt(parts[0]);
+    const col = parseInt(parts[1]);
+    return [row, col];
+  }
 
   styleShipOnBoard(ship, startRow, startColumn, direction) {
     if (direction === "Horizontal") {
@@ -651,4 +687,5 @@ class Dom {
 export default Dom;
 
 // Schiffe beim polatzieren, wenn sie den rand des spielbretts erreichen dann kommt ein error
-// Zähler für die Runden und gewinne
+// der counter bleibt bei 0???
+//nach dem polatzuieren soll der hover effect wieder verschwinden
