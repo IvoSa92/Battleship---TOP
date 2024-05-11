@@ -44,6 +44,14 @@ class Dom {
         if (event.key === "Enter") {
           this.initializeGame(input.value);
           div.remove();
+          this.soundPopUp();
+          setTimeout(() => {
+            let popUp = document.querySelector(".popUp");
+            popUp.classList.toggle("activate");
+            setTimeout(() => {
+              popUp.classList.toggle("activate");
+            }, 2000);
+          }, 1000);
         }
       });
 
@@ -55,6 +63,13 @@ class Dom {
         div.style.transform = "translateY(0)";
       }, 100);
     }
+  }
+
+  soundPopUp() {
+    let popUp = document.createElement("div");
+    popUp.className = "popUp";
+    popUp.textContent = "Turn Sound On!";
+    this.container.appendChild(popUp);
   }
 
   //initialize game
@@ -100,7 +115,7 @@ class Dom {
         loadingContainer.remove();
       }, 1000);
       this.showUi();
-    }, 1000); //war 4000
+    }, 4000);
   }
 
   showUi() {
@@ -529,7 +544,7 @@ class Dom {
         if (cell.ship && cell.ship.destroyed) {
           cell.element.classList.add("destroyed");
         } else if (cell.ship && !cell.hasBeenShot) {
-          cell.element.classList.add("ship-on-cell");
+          // cell.element.classList.add("ship-on-cell");
         } else if (!cell.ship && cell.hasBeenShot) {
           cell.element.classList.add("cell-shot");
         } else if (cell.ship && cell.hasBeenShot) {
@@ -685,7 +700,3 @@ class Dom {
 }
 
 export default Dom;
-
-// Schiffe beim polatzieren, wenn sie den rand des spielbretts erreichen dann kommt ein error
-// der counter bleibt bei 0???
-//nach dem polatzuieren soll der hover effect wieder verschwinden

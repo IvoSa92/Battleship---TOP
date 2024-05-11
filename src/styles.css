@@ -652,3 +652,30 @@ button {
 .place-ship-hover {
   background-color: gray;
 }
+
+.cantPlace {
+  background-color: red;
+}
+
+.popUp {
+  font-family: Exo 2;
+  font-weight: 600;
+  font-size: 2rem;
+  position: absolute;
+  left: 37%;
+  top: 21%;
+  border-radius: 10px;
+  text-align: center;
+  width: auto;
+  padding: 1rem;
+  height: auto;
+  background-color: var(--triadic-color-3);
+  box-shadow: rgba(0, 0, 0, 0.3) 0 10px 20px;
+  opacity: 0;
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+.activate {
+  opacity: 1;
+  transform: scale(1.1);
+}
