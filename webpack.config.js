@@ -11,4 +11,16 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
   },
   devtool: "eval-source-map",
+  module: {
+    rules: [
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        type: "asset/resource",
+      },
+      {
+        test: /\.(wav|mp3)$/,
+        type: "asset/resource",
+      },
+    ],
+  },
 };
