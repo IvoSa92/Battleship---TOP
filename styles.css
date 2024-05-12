@@ -1,0 +1,681 @@
+:root {
+  --backgroundColor: rgba(246, 241, 209);
+  --colorShadeA: rgb(37, 119, 82);
+  --colorShadeB: rgb(121, 186, 156);
+  --colorShadeC: rgb(150, 232, 195);
+  --colorShadeD: rgb(187, 232, 211);
+  --colorShadeE: rgb(205, 255, 232);
+
+  --complementary-color: #d3bbe8;
+  --secondary-color-1: #e8d3bb;
+  --secondary-color-2: #bbd3e8;
+  --secondary-color-3: #d3e8bb;
+
+  --triadic-color-1: #d3bbe8;
+  --triadic-color-2: #e8d3bb;
+  --triadic-color-3: #bbd3e8;
+  --triadic-color-4: #e8bbe3;
+}
+
+body,
+html {
+  font-family: "Exo 2";
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  opacity: 0;
+  flex-direction: row;
+  align-items: center;
+  width: 100vw;
+  height: 10vh;
+  background-color: #d1e9e3;
+  justify-content: space-between;
+  transition: opacity 2s ease;
+}
+
+.logo-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.title {
+  font-family: "Exo 2";
+  font-size: 3rem;
+  margin-left: 1rem;
+}
+
+.logo {
+  margin-left: 1rem;
+  width: 4rem;
+  height: 4rem;
+  mix-blend-mode: multiply;
+}
+
+.credits {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+  font-family: "Exo 2";
+  font-size: 0.8rem;
+}
+
+.credit-logo {
+  width: 2rem;
+  height: 2rem;
+}
+
+/*GAME CONTAINER*/
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  padding: 0;
+}
+
+.start-game-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.ask-name-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 25rem;
+  height: 10rem;
+  transform: translateY(-500%);
+  background-color: var(--colorShadeD);
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 3px 9px;
+  padding: 0.5rem;
+  margin-top: 3rem;
+  font-family: "Exo 2";
+  transition: transform 1s ease;
+}
+
+.ask-name-div h1 {
+  color: var(--colorShadeA);
+  text-decoration: underline;
+  font-size: 2.5rem;
+}
+
+.ask-name-div input {
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 3px 9px;
+  padding: 10px;
+  text-align: center;
+  font-family: "Exo 2";
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--colorShadeA);
+  background-color: #ecf9f6;
+}
+
+.ask-name-div input:focus {
+  outline: none;
+}
+
+.board-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  width: 100vw;
+  height: auto;
+  gap: 3em;
+  margin-top: 3rem;
+}
+
+.board {
+  display: flex;
+  width: auto;
+  height: 100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-title-div,
+.enemy-title-div {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  border-radius: 10px;
+  padding: 0.5rem;
+  margin-bottom: 3rem;
+  color: rgb(2, 38, 2);
+}
+
+.user-title-div {
+  background-color: var(--secondary-color-3);
+}
+
+.enemy-title-div {
+  background-color: rgb(246, 125, 125);
+}
+
+.icon {
+  display: none;
+  margin-right: 0.5rem;
+  width: 3rem;
+}
+
+.ship-container {
+  border: 5px dotted var(--secondary-color-3);
+  border-radius: 1rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  flex-wrap: wrap;
+  margin-bottom: 5rem;
+}
+
+.e-ship-container {
+  transform: scaleX(-1);
+  border: 5px dotted rgb(246, 125, 125);
+  border-radius: 1rem;
+  margin-top: 5.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  flex-wrap: wrap;
+}
+
+.ship-icon {
+  position: relative;
+  display: inline-block;
+  width: 8rem;
+  transition: filter 1s ease, transform 1s ease, width 1s ease;
+}
+
+.gray {
+  filter: grayscale(100%);
+}
+
+.icon-sunk {
+  filter: grayscale(100%);
+  transform: scale(0.7);
+}
+
+.board-title {
+  margin: 0rem;
+}
+
+.user-board {
+  transition: transform 1s ease;
+  transform: translateX(-300%);
+  margin-left: 1rem;
+}
+
+.enemy-board {
+  margin-right: 1rem;
+  transition: transform 1s ease;
+  transform: translateX(300%);
+}
+
+.user-fleet {
+  color: rgb(4, 49, 4);
+  margin-right: 1rem;
+}
+
+.enemy-fleet {
+  color: rgb(0, 0, 0);
+  margin-right: 1rem;
+}
+
+.activate {
+  display: flex;
+}
+
+.direction-btn-div {
+  display: flex;
+  height: auto;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.ship-direction {
+  display: flex;
+  margin-right: 1rem;
+}
+
+.user-fleet,
+.enemy-fleet {
+  display: none;
+}
+
+.ship-on-cell {
+  background-color: #9c9e99;
+}
+
+.player-gameboard,
+.enemy-gameboard {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  width: 25rem;
+  height: 25rem;
+  background-image: url(../src/assets/water.jpg);
+
+  background-size: cover;
+  border: 5px solid rgb(189, 189, 189);
+  border-radius: 5px;
+  transition: border 0.5s ease-in-out, animation 0.5s ease-in-out,
+    border-color 0.5s ease-in-out, blurr 0.5s ease;
+}
+
+.cell {
+  position: relative;
+  transition: border 0.3s;
+  border: dashed 1px rgb(189, 189, 189);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.enemy-cell:hover {
+  cursor: cell;
+  /* box-shadow: inset 0 0 0 2px red;*/
+}
+
+.enemy-cell:hover::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30%;
+  height: 30%;
+  background-color: red;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(3);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+.cell-attack::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30%; /* Prozentuale Größe relativ zur Zelle */
+  height: 30%; /* Prozentuale Größe relativ zur Zelle */
+  background-color: red;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  animation: pulse 3s infinite;
+  z-index: 1;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/*.cell-attack {
+  position: relative;
+  content: "";
+  top: 50%;
+  left: 50%;
+  width: 30%;
+  height: 30%;
+  background-color: red;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse 3s infinite;
+}*/
+
+.cell-shot {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2'%3E%3Cline x1='1' y1='1' x2='23' y2='23'/%3E%3Cline x1='23' y1='1' x2='1' y2='23'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: rgb(42, 96, 178);
+}
+
+.cell-shot-animation {
+  opacity: 1;
+}
+
+.ship-shot {
+  background-color: red;
+  transition: background-color 0.5s ease-out;
+}
+
+.ship-shot.pulsing {
+  animation: pulse 2s ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: red;
+  }
+  25%,
+  75% {
+    background-color: #ff6666;
+  }
+  50% {
+    background-color: #ff3333;
+  }
+  100% {
+    background-color: red;
+  }
+}
+
+.destroyed {
+  background-color: black;
+  border: none;
+}
+
+.blurr {
+  filter: blur(5px);
+}
+
+.winner-container {
+  font-family: "Exo 2";
+  text-align: center;
+  width: 30rem;
+  height: 10rem;
+  display: column;
+  justify-content: center;
+  align-items: center;
+  background-color: bisque;
+  position: absolute;
+  left: 30%;
+  top: 20%;
+  border-radius: 1rem;
+  border-right: 10px solid rgb(238, 158, 59);
+  border-bottom: 10px solid rgb(238, 158, 59);
+  box-shadow: rgba(0, 0, 0, 0.3) 0 3px 9px;
+  transition: transform 0.5s ease, border 0.5s ease-in-out, box-shadow 0.5s ease;
+}
+
+button {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  border: 0;
+  vertical-align: middle;
+  text-decoration: none;
+  font-size: 1.5rem;
+  color: var(--colorShadeA);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.start-game-1player {
+  font-size: 0;
+  opacity: 0;
+  transition: opacity 2s ease, font-size s ease;
+  padding: 1rem 2rem;
+  border: 2px solid var(--colorShadeA);
+  border-radius: 1em;
+  background: var(--colorShadeE);
+  transform-style: preserve-3d;
+  transition: all 175ms cubic-bezier(0, 0, 1, 1);
+  margin: 1rem;
+}
+
+.ship-direction {
+  transition: opacity 2s ease, font-size s ease;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 2px solid var(--colorShadeA);
+  border-radius: 1em;
+  background: var(--colorShadeE);
+  transform-style: preserve-3d;
+  transition: all 175ms cubic-bezier(0, 0, 1, 1);
+  margin: 1rem;
+}
+.start-game-1player::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--colorShadeC);
+  border-radius: inherit;
+  box-shadow: 0 0 0 2px var(--colorShadeB), 0 0.75em 0 0 var(--colorShadeA);
+  transform: translate3d(0, 0.75em, -1em);
+  transition: all 175ms cubic-bezier(0, 0, 1, 1);
+}
+
+.ship-direction::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--colorShadeC);
+  border-radius: inherit;
+  box-shadow: 0 0 0 2px var(--colorShadeB), 0 0.4em 0 0 var(--colorShadeA);
+  transform: translate3d(0, 0.4em, -1em);
+  transition: all 175ms cubic-bezier(0, 0, 1, 1);
+}
+
+.start-game-1player:hover {
+  background: var(--colorShadeD);
+  transform: translate(0, 0.375em);
+}
+
+.ship-direction:hover {
+  background: var(--colorShadeD);
+  transform: translate(0, 0.2em);
+}
+
+.start-game-1player:hover::before,
+.ship-direction :hover::before {
+  transform: translate3d(0, 0.75em, -0.1rem);
+}
+
+.start-game-1player:active,
+.ship-direction:active {
+  transform: translate(0em, 0.75em);
+}
+
+.start-game-1player:active::before,
+.ship-direction:active::before {
+  transform: translate3d(0, 0, -1em);
+
+  box-shadow: 0 0 0 2px var(--colorShadeB), 0 0.25em 0 0 var(--colorShadeB);
+}
+
+.current-player {
+  border-color: red;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 2px #ff1178d7, 0 0 6px #ff1178d5, 0 0 10px #ff1177,
+      0 0 20px #ff2255, 0 0 40px #ff2255;
+  }
+  50% {
+    box-shadow: 0 0 2px #ff1177, 0 0 8px #ff1177, 0 0 12px #ff1177,
+      0 0 10px #ff2255, 0 0 20px #ff2255;
+  }
+}
+
+.first-vertical {
+  clip-path: polygon(0% 100%, 100% 100%, 50% 0%);
+}
+
+.last-vertical {
+  border-radius: 0 0 30% 30%;
+}
+
+.first-horizontal {
+  clip-path: polygon(0% 50%, 100% 0%, 100% 100%);
+}
+
+.last-horizontal {
+  border-radius: 0 30% 30% 0;
+}
+
+.ship1 {
+  transition: left 0.1s ease, top 0.1s ease;
+
+  width: 10rem;
+}
+
+.loader {
+  opacity: 0;
+
+  transition: opacity 1s ease;
+  width: fit-content;
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 30px;
+  background: linear-gradient(90deg, #000 50%, #0000 0) right/200% 100%;
+  animation: l21 2s linear 2;
+}
+.loader::before {
+  content: "Loading...";
+  color: #0000;
+  padding: 0 5px;
+  background: inherit;
+  background-image: linear-gradient(90deg, #fff 50%, #000 0);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+@keyframes l21 {
+  100% {
+    background-position: left;
+  }
+}
+.loadingImg {
+  width: 40rem;
+  height: auto;
+  margin-bottom: 2rem;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.loading-container {
+  transition: opacity 1s ease;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.new-game-btn,
+.play-again-btn {
+  transition: transform 0.3s ease, background-color 0.8s ease, color 1s ease;
+  font-family: "Exo 2";
+  border: 2px solid black;
+  border-radius: 1rem;
+  padding: 1rem;
+  cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 3px 9px;
+}
+
+.new-game-btn {
+  margin-right: 1rem;
+}
+
+.new-game-btn:hover {
+  transform: scale(1.05);
+  color: white;
+  background-color: rgb(235, 81, 81);
+}
+
+.play-again-btn:hover {
+  color: white;
+  background-color: var(--secondary-color-3);
+  transform: scale(1.05);
+}
+
+.winner-container:hover {
+  transform: scale(1.05);
+  border: 1px solid;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 10px 20px;
+}
+
+.place-ship-hover {
+  background-color: gray;
+}
+
+.cantPlace {
+  background-color: red;
+}
+
+.popUp {
+  font-family: Exo 2;
+  font-weight: 600;
+  font-size: 2rem;
+  position: absolute;
+  left: 37%;
+  top: 21%;
+  border-radius: 10px;
+  text-align: center;
+  width: auto;
+  padding: 1rem;
+  height: auto;
+  background-color: var(--triadic-color-3);
+  box-shadow: rgba(0, 0, 0, 0.3) 0 10px 20px;
+  opacity: 0;
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+}
+
+.activate {
+  opacity: 1;
+  transform: scale(1.1);
+}
